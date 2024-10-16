@@ -9,4 +9,5 @@ Componentes del equipo:
 | Daniel Egea Garo| QA (Calidad) y DevOps                          | Pruebas de software, automatización de pruebas, validación de requisitos. |
 | Fernando Candón Berenguer | Project Manager                        | Gestión del proyecto, planificación, supervisión del progreso, resolución de conflictos. |
 
-
+> [!IMPORTANT]
+> Esta informacion puede ser modificada tras las proximas reuniones de equipo para asignacion y gestion del proyecto
