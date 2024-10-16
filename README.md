@@ -3,11 +3,11 @@ Repositorio para trabajo web de gestión de propuestas de proyectos IT para la U
 
 Componentes del equipo:
 
-| **Miembro**           | **Rol**                                      | **Responsabilidades** |
-|---------------------|-----------------------------------------------|-----------------|
-| Miguel Cabral Ramirez | Desarrollador                          | Desarrollo de la interfaz de usuario, diseño responsivo, integración con APIs. |
-| Daniel Egea Garo| QA (Calidad) y DevOps                          | Pruebas de software, automatización de pruebas, validación de requisitos. |
-| Fernando Candón Berenguer | Project Manager                        | Gestión del proyecto, planificación, supervisión del progreso, resolución de conflictos. |
+| **Miembro**           | **Rol**                                      | 
+|---------------------|-----------------------------------------------|
+| Miguel Cabral Ramirez | Scrum Master,Programador, Analista, Administrador de sistemas     |
+| Daniel Egea Garo| Programador, Arquitecto software ,Tester  | 
+| Fernando Candón Berenguer | Programador,Product Owner,Diseñador de interfaz de usuario  |
 
 > [!IMPORTANT]
 > Esta informacion puede ser modificada tras las proximas reuniones de equipo para asignacion y gestion del proyecto
