@@ -6,7 +6,7 @@ Componentes del equipo:
 | **Miembro**           | **Rol**                                      | 
 |---------------------|-----------------------------------------------|
 | Miguel Cabral Ramirez | Scrum Master,Programador, Analista, Administrador de sistemas     |
-| Daniel Egea Garo| Programador, Arquitecto software ,Tester  | 
+| Daniel Egea Garófano| Programador, Arquitecto software ,Tester  | 
 | Fernando Candón Berenguer | Programador,Product Owner,Diseñador de interfaz de usuario  |
 
 > [!IMPORTANT]
