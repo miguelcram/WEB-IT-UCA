@@ -9,6 +9,17 @@ Componentes del equipo:
 | Daniel Egea Garófano| Programador, Arquitecto software ,Tester  | 
 | Fernando Candón Berenguer | Programador,Product Owner,Diseñador de interfaz de usuario  |
 
+## Instalación de Maven (Windows) para la ejecución del proyecto:
+
+### Descargar Maven:
+Ve a la página de descargas de Maven: https://maven.apache.org/download.cgi Descarga el archivo binario ZIP de la última versión de Maven.
+### Instalar Maven:
+Extrae el contenido del archivo ZIP descargado en una ubicación de tu elección, por ejemplo, C:\Program Files\Apache\Maven.
+### Configurar las variables de entorno:
+Abre el Panel de Control y ve a Sistema y seguridad > Sistema > Configuración avanzada del sistema. Haz clic en el botón Variables de entorno. En la sección Variables del sistema, busca la variable Path y haz clic en Editar. Añade la ruta al directorio bin de Maven, por ejemplo, C:\Program Files\Apache\Maven\bin. Crea una nueva variable de entorno llamada MAVEN_HOME y establece su valor en la ruta donde instalaste Maven, por ejemplo, C:\Program Files\Apache\Maven.
+### Verificar la instalación:
+Abre una nueva ventana de terminal (o PowerShell) y ejecuta el siguiente comando para verificar que Maven está instalado correctamente: mvn -v
+
 ## Modulos de la web
 
 ### 1. Diagrama BPMN de las funcionalidades del sistema
