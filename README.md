@@ -9,6 +9,14 @@ Componentes del equipo:
 | Daniel Egea Garófano| Programador, Arquitecto software ,Tester  | 
 | Fernando Candón Berenguer | Programador,Product Owner,Diseñador de interfaz de usuario  |
 
+## Entorno de desarrollo
+Se usa Java Development Kit (JDK). Con la versión del JDK 17+.
+El IDE es VSCode, debido a su alto uso y soporte en entornos reales y por la modularidad de sus extensiones. Añadidas las extensiones para trabajar con Spring Boot Initializr para crear proyectos de Spring Boot más fácilmente.
+
+## Descargar Node.js:
+Necesario para gestionar Vaadin. Página de descarga: https://nodejs.org/en
+Instalar por defecto.
+
 ## Instalación de Maven (Windows) para la ejecución del proyecto:
 
 ### Descargar Maven:
@@ -17,8 +25,15 @@ Ve a la página de descargas de Maven: https://maven.apache.org/download.cgi Des
 Extrae el contenido del archivo ZIP descargado en una ubicación de tu elección, por ejemplo, C:\Program Files\Apache\Maven.
 ### Configurar las variables de entorno:
 Abre el Panel de Control y ve a Sistema y seguridad > Sistema > Configuración avanzada del sistema. Haz clic en el botón Variables de entorno. En la sección Variables del sistema, busca la variable Path y haz clic en Editar. Añade la ruta al directorio bin de Maven, por ejemplo, C:\Program Files\Apache\Maven\bin. Crea una nueva variable de entorno llamada MAVEN_HOME y establece su valor en la ruta donde instalaste Maven, por ejemplo, C:\Program Files\Apache\Maven.
-### Verificar la instalación:
-Abre una nueva ventana de terminal (o PowerShell) y ejecuta el siguiente comando para verificar que Maven está instalado correctamente: mvn -v
+
+## Verificación:
+Una vez terminado todo el proceso, abre la terminal o consola para asegurarte de que los siguientes comandos funcionan correctamente:
+
+```terminal
+java -version
+mvn -version
+node -v
+```
 
 ## Modulos de la web
 
