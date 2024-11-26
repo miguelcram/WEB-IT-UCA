@@ -1,7 +1,7 @@
 package es.uca.iw.webituca.Layout;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.html.Div;
+// import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 

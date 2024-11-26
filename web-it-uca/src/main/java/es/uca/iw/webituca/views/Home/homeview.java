@@ -14,7 +14,7 @@ public class Homeview extends Composite<VerticalLayout> {
         VerticalLayout layout = getContent();
         layout.add(new Span("Esto es Home view, aqui se mostrara informacion de proyectos actuales"));
 
-        Button loginButton = new Button("Go to Login", event -> UI.getCurrent().navigate("/login"));
+        Button loginButton = new Button("Login", event -> UI.getCurrent().navigate("/login"));
         layout.add(loginButton);
 
         layout.add(new Footer());
