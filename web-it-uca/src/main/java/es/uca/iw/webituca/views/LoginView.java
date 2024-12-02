@@ -7,21 +7,23 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
 
-@Route(value = "/login")
+@Route(value = "login")
 public class LoginView extends Composite<VerticalLayout> {
     public LoginView() {
-        TextField usernameField = new TextField("Username");
-        PasswordField passwordField = new PasswordField("Password");
-        Button loginButton = new Button("Login", event -> {
+        TextField usernameField = new TextField("Usuario");
+        PasswordField passwordField = new PasswordField("Contraseña");
+        Button loginButton = new Button("Identificate", event -> {
             String username = usernameField.getValue();
             String password = passwordField.getValue();
             if (authenticate(username, password)) {
-                UI.getCurrent().navigate("/home");
+                VaadinSession.getCurrent().setAttribute("user", username);
+                UI.getCurrent().navigate("home");
             } else {
-                Notification.show("Invalid credentials");
+                Notification.show("Error en el inicio de sesion. Compruebe su usuario y contraseña de nuevo.");
             }
         });
 
