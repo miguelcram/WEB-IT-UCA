@@ -47,7 +47,7 @@ node -v
 
 ### 4. Configuración de la cartera de proyectos
 
-### 5. Presentaciónd de proyectos
+### 5. Presentación de proyectos
 
 
 ## Puesta en marcha de la aplicación
