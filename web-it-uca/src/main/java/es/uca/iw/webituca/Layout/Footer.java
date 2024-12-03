@@ -8,6 +8,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 public class Footer extends Composite<HorizontalLayout> {
     public Footer() {
         HorizontalLayout layout = getContent();
+        layout.setWidthFull();
         layout.add(new Span("© 2023 Your Company"));
         layout.add(new Span(" | "));
         layout.add(new Span("Privacy Policy"));
