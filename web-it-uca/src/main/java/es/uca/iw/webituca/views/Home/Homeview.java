@@ -15,9 +15,11 @@ import es.uca.iw.webituca.Service.ProyectoService;
 import java.util.List;
 
 @Route(value = "home")
-public class HomeView extends Composite<VerticalLayout> {
-    public HomeView() {
+public class Homeview extends Composite<VerticalLayout> {
+    public Homeview() {
         VerticalLayout layout = getContent();
+        layout.setSizeFull(); // Asegura que el layout ocupe todo el espacio disponible
+
         layout.add(new Span("Esto es Home view, aquí se mostrará información de proyectos actuales"));
         
         //Verificación de inicio de sesion
