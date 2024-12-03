@@ -4,55 +4,49 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Layout;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import com.vaadin.flow.server.menu.MenuConfiguration;
-import com.vaadin.flow.server.menu.MenuEntry;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 import es.uca.iw.webituca.Layout.Header;
 import es.uca.iw.webituca.Layout.Footer;
-
-import java.util.List;
 
 @Layout
 @AnonymousAllowed
 public class MainLayout extends AppLayout {
 
-    private H1 viewTitle;
+    private Header header;
+    private Footer footer;
 
     public MainLayout() {
-        //setPrimarySection(Section.DRAWER);
-
+        setPrimarySection(Section.NAVBAR);
+        //setSizeFull(); // Asegura que el MainLayout ocupe todo el espacio disponible
         addHeaderContent();
         addFooterContent();
+
     }
 
     private void addHeaderContent() {
-        viewTitle = new H1();
-        Header header = new Header();
-      //  HorizontalLayout headerLayout = new HorizontalLayout(viewTitle, header);
-      //  headerLayout.setWidthFull();
-      //  headerLayout.expand(viewTitle);
+        header = new Header();
         addToNavbar(header);
     }
 
     private void addFooterContent() {
-        Footer footer = new Footer();
+        footer = new Footer();
+        // Añadir el footer al contenido principal
         addToDrawer(footer);
+       
     }
 
-
-
-    
     @Override
     protected void afterNavigation() {
         super.afterNavigation();
-        viewTitle.setText(getCurrentPageTitle());
+       // header.setTitle(getCurrentPageTitle());
+    }
+/* 
+    private String getCurrentPageTitle() {
+        return "Current Page Title"; // Puedes ajustar esto según tus necesidades
     }
 
-    private String getCurrentPageTitle() {
-        return MenuConfiguration.getPageHeader(getContent()).orElse("");
-    }
+    */
 }

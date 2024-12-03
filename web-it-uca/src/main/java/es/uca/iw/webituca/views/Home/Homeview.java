@@ -60,7 +60,7 @@ public class Homeview extends Composite<VerticalLayout> {
             layout.add(logoutButton);
         }
 
-        layout.add(new Footer());
+        //layout.add(new Footer());
     }
 
     private void gestionarProyecto(Proyecto proyecto) {
