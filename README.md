@@ -1,5 +1,4 @@
-# Bienvenidos a la WEB-IT-UCA wiki!
-## Proyecto Java: Plan de Proyecto
+# Proyecto Java: Plan de Proyecto
 ## Descripción
 La Universidad de Cádiz quiere gestionar de manera eficiente y alineada con la estrategia institucional todos los proyectos tecnológicos que se llevan a cabo en la universidad. La solución propuesta consiste en el desarrollo de un sistema web para la gestión anual de la cartera de proyectos TI en la Universidad de Cádiz.
 
