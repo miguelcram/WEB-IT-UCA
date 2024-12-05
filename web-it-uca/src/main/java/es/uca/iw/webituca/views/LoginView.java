@@ -27,10 +27,15 @@ public class LoginView extends Composite<VerticalLayout> {
             }
         });
 
+        Button registro = new Button("Registro", event -> {
+            UI.getCurrent().navigate("registro");
+        });
+
         getContent().add(new Span("Login"));
         getContent().add(usernameField);
         getContent().add(passwordField);
         getContent().add(loginButton);
+        getContent().add(registro);
     }
 
     private boolean authenticate(String username, String password) {
