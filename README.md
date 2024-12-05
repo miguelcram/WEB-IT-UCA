@@ -42,8 +42,11 @@ node -v
 ![Modelos de procesos BPMN del sistema](https://github.com/user-attachments/assets/bb5ef285-870c-4da9-a803-7728d386d978)
 
 ### 2. Página principal
+En la página principal, el usuario no registrado podrá acceder a la lista de proyectos actuales en la cartera de Proyectos TI en ese momento, además de poder iniciar sesión con su usuario verificado para poder gestionar los proyectos a los que tenga acceso de la lista.
 
 ### 3. Registro de usuarios e incio de sesión
+
+![Diagram de diseño BPMN REGISTRO DE USUARIOS](https://github.com/user-attachments/assets/6438c7eb-dc06-4a11-9f2a-1363f9a88fca)
 
 ### 4. Configuración de la cartera de proyectos
 
