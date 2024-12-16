@@ -50,6 +50,9 @@ public class Usuario implements UserDetails {
     @Unique
     private String email;
 
+    @Column(length = 15)
+    private String telefono;
+
     // @ManyToOne
     // private Centro centro;
 
@@ -132,6 +135,20 @@ public class Usuario implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    
+    public String getTelefono() {
+
+        return telefono;
+
+    }
+
+    public void setTelefono(String telefono) {
+
+        this.telefono = telefono;
+
+    }
+
 
     
     // public Rol getRol() {

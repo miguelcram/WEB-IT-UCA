@@ -1,4 +1,4 @@
-package es.uca.iw.webituca.views.empty;
+package es.uca.iw.webituca.Views.empty;
 
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;

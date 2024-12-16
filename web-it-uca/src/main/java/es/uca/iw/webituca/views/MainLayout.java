@@ -1,4 +1,4 @@
-package es.uca.iw.webituca.views;
+package es.uca.iw.webituca.Views;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
