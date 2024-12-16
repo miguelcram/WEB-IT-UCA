@@ -3,12 +3,10 @@ package es.uca.iw.webituca.Model;
 import java.util.Collections;
 import java.util.List;
 
-import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-//import es.uca.iw.carteruca.models.solicitud.Solicitud;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,13 +14,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
+    private static final long serialVersionUID = 1L;
 
     @Override
     public List<GrantedAuthority> getAuthorities() {
@@ -33,8 +30,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, nullable = false)
-    @Unique
+    @Column(length = 25, nullable = false, unique = true)
     private String usuario;
 
     @Column(nullable = false)
@@ -46,8 +42,7 @@ public class Usuario implements UserDetails {
     @Column(length = 50, nullable = false)
     private String apellidos;
 
-    @Column(length = 100, nullable = false)
-    @Unique
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
     // @ManyToOne
