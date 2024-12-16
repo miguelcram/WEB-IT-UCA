@@ -9,8 +9,8 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import es.uca.iw.webituca.Model.Usuario;
-import es.uca.iw.webituca.Service.UsuarioService;
+import es.uca.iw.webituca.model.Usuario;
+import es.uca.iw.webituca.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("registro")

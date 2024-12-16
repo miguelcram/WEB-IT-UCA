@@ -8,16 +8,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-//import es.uca.iw.carteruca.models.solicitud.Solicitud;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -43,8 +38,11 @@ public class Usuario implements UserDetails {
     @Column(length = 25, nullable = false)
     private String nombre;
 
-    @Column(length = 50, nullable = false)
-    private String apellidos;
+    @Column(name = "apellido1")
+    private String apellido1;
+
+    @Column(name = "apellido2")
+    private String apellido2;
 
     @Column(length = 100, nullable = false)
     @Unique
@@ -53,27 +51,15 @@ public class Usuario implements UserDetails {
     @Column(length = 15)
     private String telefono;
 
-    // @ManyToOne
-    // private Centro centro;
-
-    // @OneToMany
-    // private List<Solicitud> solicitudes;
-
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Solicitante'")
-    @Enumerated(EnumType.STRING)
-    //private Rol rol;
-
-    // @Column(columnDefinition = "VARCHAR(255) DEFAULT 'icons/profile.svg'")
-    // private String fotoPerfil = "icons/profile.svg";
-
-    // public List<GrantedAuthority> getAuthorities() {
-    //     return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.getRol().name()));
-    // }
-
-    // Getters y setters
+    // @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Solicitante'")
+    // @Enumerated(EnumType.STRING)
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -120,13 +106,22 @@ public class Usuario implements UserDetails {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido1() {
+        return apellido1;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellido1(String apellido1) {
+        this.apellido1 = apellido1;
     }
+
+    public String getApellido2() {
+        return apellido2;
+    }
+
+    public void setApellido2(String apellido2) {
+        this.apellido2 = apellido2;
+    }
+
 
     public String getEmail() {
         return email;
@@ -136,48 +131,11 @@ public class Usuario implements UserDetails {
         this.email = email;
     }
 
-    
     public String getTelefono() {
-
         return telefono;
-
     }
 
     public void setTelefono(String telefono) {
-
         this.telefono = telefono;
-
     }
-
-
-    
-    // public Rol getRol() {
-    //     return rol;
-    // }
-
-    // public void setRol(Rol rol) {
-    //     this.rol = rol;
-    // }
-
-    // public Centro getCentro() {
-    //     return centro;
-    // }
-
-    // // public String getFotoPerfil() { return fotoPerfil; }
-
-    // // public void setFotoPerfil(String fotoPerfil) {
-    // //     this.fotoPerfil = fotoPerfil;
-    // // }
-
-    // public void setCentro(Centro centro) {
-    //     this.centro = centro;
-    // }
-
-    // public List<Solicitud> getSolicitudes() {
-    //     return solicitudes;
-    // }
-
-    // public void setSolicitudes(List<Solicitud> solicitudes) {
-    //     this.solicitudes = solicitudes;
-    // }
 }
