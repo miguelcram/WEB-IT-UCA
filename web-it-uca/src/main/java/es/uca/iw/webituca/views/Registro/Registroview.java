@@ -9,11 +9,14 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import es.uca.iw.webituca.model.Usuario;
-import es.uca.iw.webituca.service.UsuarioService;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+
+import es.uca.iw.webituca.Model.Usuario;
+import es.uca.iw.webituca.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("registro")
+@AnonymousAllowed
 public class RegistroView extends VerticalLayout {
 
     @Autowired
@@ -24,13 +27,14 @@ public class RegistroView extends VerticalLayout {
     private TextField apellido2 = new TextField("Segundo Apellido");
     private EmailField email = new EmailField("Email");
     private TextField telefono = new TextField("Teléfono");
+    private TextField usuarioField = new TextField("Usuario");
     private PasswordField password = new PasswordField("Contraseña");
     private PasswordField repitePassword = new PasswordField("Repite Contraseña");
 
     public RegistroView() {
         H1 h1 = new H1("Registro");
         FormLayout form = new FormLayout();
-        form.add(nombre, apellido1, apellido2, email, telefono, password, repitePassword);
+        form.add(nombre, apellido1, apellido2, email, telefono, usuarioField, password, repitePassword);
 
         Button guardarButton = new Button("Guardar", event -> {
             if (!password.getValue().equals(repitePassword.getValue())) {
@@ -44,6 +48,7 @@ public class RegistroView extends VerticalLayout {
             usuario.setApellido2(apellido2.getValue());
             usuario.setEmail(email.getValue());
             usuario.setTelefono(telefono.getValue());
+            usuario.setUsername(usuarioField.getValue());
             usuario.setPassword(password.getValue());
 
             usuarioService.save(usuario);

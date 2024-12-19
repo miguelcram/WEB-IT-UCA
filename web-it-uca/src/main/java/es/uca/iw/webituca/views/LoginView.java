@@ -8,10 +8,12 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
 
 @Route(value = "login")
+@AnonymousAllowed
 public class LoginView extends Composite<VerticalLayout> {
     public LoginView() {
         TextField usernameField = new TextField("Usuario");

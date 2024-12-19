@@ -8,6 +8,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+
 import es.uca.iw.webituca.Layout.Footer;
 import es.uca.iw.webituca.Model.Proyecto;
 import es.uca.iw.webituca.Service.ProyectoService;
@@ -15,6 +17,7 @@ import es.uca.iw.webituca.Service.ProyectoService;
 import java.util.List;
 
 @Route(value = "home")
+@AnonymousAllowed
 public class Homeview extends Composite<VerticalLayout> {
     public Homeview() {
         VerticalLayout layout = getContent();
