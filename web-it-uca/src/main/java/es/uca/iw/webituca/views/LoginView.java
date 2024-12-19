@@ -3,18 +3,29 @@ package es.uca.iw.webituca.Views;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
+import es.uca.iw.webituca.Service.UsuarioService;
+import es.uca.iw.webituca.Model.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Route(value = "login")
 @AnonymousAllowed
 public class LoginView extends Composite<VerticalLayout> {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public LoginView() {
         TextField usernameField = new TextField("Usuario");
         PasswordField passwordField = new PasswordField("Contraseña");
@@ -41,8 +52,10 @@ public class LoginView extends Composite<VerticalLayout> {
     }
 
     private boolean authenticate(String username, String password) {
-        // Aquí iría la lógica para autenticar al usuario con la base de datos
-        // Por simplicidad, vamos a suponer que hay un usuario "user" con contraseña "pass"
-        return "user".equals(username) && "pass".equals(password);
+        Usuario usuario = usuarioService.findByUsuario(username);
+        if (usuario != null && passwordEncoder.matches(password, usuario.getPassword())) {
+            return true;
+        }
+        return false;
     }
 }
