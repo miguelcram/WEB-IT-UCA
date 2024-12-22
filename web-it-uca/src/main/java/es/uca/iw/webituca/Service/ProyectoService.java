@@ -1,20 +1,27 @@
 package es.uca.iw.webituca.Service;
 
-import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
-
 import es.uca.iw.webituca.Model.Proyecto;
+import es.uca.iw.webituca.Repository.ProyectoRepository;
 
+@Service
 public class ProyectoService {
-    public List<Proyecto> listarProyectos(String username) {
-        List<Proyecto> proyectos = new ArrayList<>();
+    
+    @Autowired
+    private ProyectoRepository proyectoRepository;
 
-        //Prueba
-        proyectos.add(new Proyecto("Proyecto 1", true, username != null)); // Solo logados gestionan
-        proyectos.add(new Proyecto("Proyecto 2", true, false));
-        proyectos.add(new Proyecto("Proyecto 3", false, false)); // Proyecto inactivo
-        proyectos.add(new Proyecto("Proyecto 4", true, username != null));
-
-        return proyectos;
+    public Proyecto save(Proyecto proyecto) {
+        return proyectoRepository.save(proyecto);
     }
+
+    public long count() {
+        return proyectoRepository.count();
+    }
+
+    public List<Proyecto> listarProyectos() {
+        return proyectoRepository.findAll();
+    }
+    
 }
