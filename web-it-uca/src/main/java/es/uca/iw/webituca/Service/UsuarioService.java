@@ -1,5 +1,7 @@
 package es.uca.iw.webituca.Service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario findByUsuario(String usuario) {
+    public Optional<Usuario> findByUsuario(String usuario) {
         return usuarioRepository.findByUsuario(usuario);
     }
 }

@@ -34,8 +34,9 @@ public class SecurityConfig extends VaadinWebSecurity {
                 .requestMatchers(new AntPathRequestMatcher("/line-awesome//*.svg")).permitAll());
         
 
-        setLoginView(http, LoginView.class);        
+                
         super.configure(http);
+        setLoginView(http, LoginView.class);
         
     }
 

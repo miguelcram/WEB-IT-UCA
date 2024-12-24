@@ -51,6 +51,11 @@ public class Usuario implements UserDetails {
     @Column(length = 15)
     private String telefono;
 
+    @Column(name = "activo")
+    private boolean activo = false;
+
+    private String codigoRegistro="";
+
     // @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Solicitante'")
     // @Enumerated(EnumType.STRING)
 
@@ -138,4 +143,20 @@ public class Usuario implements UserDetails {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getCodigoRegistro() {
+        return codigoRegistro;
+    }
+
+    public void setCodigoRegistro(String codigoRegistro) {
+        this.codigoRegistro = codigoRegistro;
+}
 }

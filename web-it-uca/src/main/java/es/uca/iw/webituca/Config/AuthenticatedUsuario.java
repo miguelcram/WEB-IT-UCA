@@ -5,6 +5,7 @@ import es.uca.iw.webituca.Repository.UsuarioRepository;
 
 import com.vaadin.flow.spring.security.AuthenticationContext;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +22,30 @@ public class AuthenticatedUsuario {
         this.authenticationContext = authenticationContext;
     }
 
-    @Transactional
-    public Optional<Usuario> get() {
-        return authenticationContext.getAuthenticatedUser(Usuario.class)
-                .map(usuarioDetails -> usuarioRepository.findByUsuario(usuarioDetails.getUsername()));
-    }
+    // @Transactional
+    // public Optional<Usuario> get() {
+    //     return authenticationContext.getAuthenticatedUser(Usuario.class)
+    //             .map(usuarioDetails -> usuarioRepository.findByUsuario(usuarioDetails.getUsername()).get());
+    // }
 
+//     @Transactional
+//     public Optional<Usuario> get() {
+//         return authenticationContext.getAuthenticatedUser(UserDetails.class)
+//     .flatMap(userDetails -> usuarioRepository.findByUsuario(userDetails.getUsername()));
+//     }
+
+
+@Transactional
+    public Optional<Usuario> get() {
+        return authenticationContext.getAuthenticatedUser(UserDetails.class)
+                .flatMap(userDetails -> {
+                Optional<Usuario> usuario = usuarioRepository.findByUsuario(userDetails.getUsername());
+                // if (usuario.isPresent() && !usuario.get().isActivo()) {
+                //     logout();
+                //     throw new UserNotActiveException("El usuario no está activo.");
+                // }
+                return usuario;
+    });}
     public void logout() {
         authenticationContext.logout();
     }
