@@ -13,6 +13,10 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.component.UI;
 import es.uca.iw.webituca.Service.UsuarioService;
 import es.uca.iw.webituca.Model.Usuario;
+import es.uca.iw.webituca.Config.AuthenticatedUsuario;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -25,6 +29,9 @@ public class LoginView extends Composite<VerticalLayout> {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticatedUsuario authenticatedUsuario;
 
     public LoginView() {
         TextField usernameField = new TextField("Usuario");
@@ -52,8 +59,8 @@ public class LoginView extends Composite<VerticalLayout> {
     }
 
     private boolean authenticate(String username, String password) {
-        Usuario usuario = usuarioService.findByUsuario(username);
-        if (usuario != null && passwordEncoder.matches(password, usuario.getPassword())) {
+        Optional<Usuario> usuario = authenticatedUsuario.get();
+        if (usuario.isPresent() && passwordEncoder.matches(password, usuario.get().getPassword())) {
             return true;
         }
         return false;
