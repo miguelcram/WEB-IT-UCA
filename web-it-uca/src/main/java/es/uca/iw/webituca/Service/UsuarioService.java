@@ -24,4 +24,9 @@ public class UsuarioService {
     public Optional<Usuario> findByUsuario(String usuario) {
         return usuarioRepository.findByUsuario(usuario);
     }
+
+    //Método count() para uso en base de datos
+    public long count() {
+        return usuarioRepository.count();
+    }
 }

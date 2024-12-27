@@ -16,19 +16,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "usuarios")   // Nombre de la tabla en la base de datos
 public class Usuario implements UserDetails {
-
-    @Override
-    public List<GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, nullable = false)
+    @Column(length = 12, nullable = false)
     @Unique
     private String usuario;
 
@@ -44,8 +39,8 @@ public class Usuario implements UserDetails {
     @Column(name = "apellido2")
     private String apellido2;
 
-    @Column(length = 100, nullable = false)
-    @Unique
+    @Column(length = 100, nullable = false, unique = true)
+    //@Unique
     private String email;
 
     @Column(length = 15)
@@ -59,22 +54,18 @@ public class Usuario implements UserDetails {
     // @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Solicitante'")
     // @Enumerated(EnumType.STRING)
 
-    public Long getId() {
-        return id;
+    //Métodos de la interfaz UserDetails
+    @Override
+    public List<GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
+    @Override
     public String getUsername() {
         return usuario;
     }
 
-    public void setUsername(String usuario) {
-        this.usuario = usuario;
-    }
-
+    @Override
     public String getPassword() {
         return password;
     }
@@ -99,6 +90,19 @@ public class Usuario implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
+    //Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
     public void setPassword(String password) {
         this.password = password;
     }
@@ -126,7 +130,6 @@ public class Usuario implements UserDetails {
     public void setApellido2(String apellido2) {
         this.apellido2 = apellido2;
     }
-
 
     public String getEmail() {
         return email;

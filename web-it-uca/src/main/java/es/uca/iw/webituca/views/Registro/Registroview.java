@@ -48,7 +48,7 @@ public class RegistroView extends VerticalLayout {
             usuario.setApellido2(apellido2.getValue());
             usuario.setEmail(email.getValue());
             usuario.setTelefono(telefono.getValue());
-            usuario.setUsername(usuarioField.getValue());
+            usuario.setUsuario(usuarioField.getValue());
             usuario.setPassword(password.getValue());
 
             usuarioService.save(usuario);
