@@ -31,6 +31,8 @@ public class DatabasePopulator implements CommandLineRunner {
             admin.setNombre("admin");
             admin.setPassword("admin");
             admin.setEmail("admin@uca.es");
+            admin.setActivo(true);
+            //admin.setCodigoRegistro(null);
             userService.save(admin);
             System.out.println("Admin created");
         }
