@@ -23,7 +23,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, nullable = false)
+    @Column(length = 12, nullable = false)
     @Unique
     private String usuario;
 
@@ -125,7 +125,6 @@ public class Usuario implements UserDetails {
     public void setApellido2(String apellido2) {
         this.apellido2 = apellido2;
     }
-
 
     public String getEmail() {
         return email;

@@ -27,6 +27,7 @@ public class DatabasePopulator implements CommandLineRunner {
         // Creamos admin si no hay usuarios
         if(userService.count() == 0) {
             Usuario admin = new Usuario();
+            admin.setUsuario("u1111111111");
             admin.setNombre("admin");
             admin.setPassword("admin");
             admin.setEmail("admin@uca.es");
@@ -34,9 +35,9 @@ public class DatabasePopulator implements CommandLineRunner {
             System.out.println("Admin created");
         }
 
-        // Crear proyectos si no existen
+        // Crear proyectos con faker si no existe ninguno
         if(proyectoService.count() == 0) {
-            for (int i = 1; i <= 20; i++) {
+            for (int i = 1; i <= 5; i++) {
                 Proyecto proyecto = new Proyecto();
                 proyecto.setTitulo(faker.book().title());
                 proyecto.setDescripcion(faker.lorem().sentence(10));
