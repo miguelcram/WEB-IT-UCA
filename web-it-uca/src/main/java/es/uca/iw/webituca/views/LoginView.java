@@ -13,7 +13,6 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.component.UI;
 import es.uca.iw.webituca.Service.UsuarioService;
 import es.uca.iw.webituca.Model.Usuario;
-import es.uca.iw.webituca.Config.AuthenticatedUsuario;
 
 import java.util.Optional;
 
@@ -30,9 +29,6 @@ public class LoginView extends Composite<VerticalLayout> {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticatedUsuario authenticatedUsuario;
-
     public LoginView() {
         TextField usernameField = new TextField("Usuario");
         PasswordField passwordField = new PasswordField("Contraseña");
@@ -43,7 +39,7 @@ public class LoginView extends Composite<VerticalLayout> {
                 VaadinSession.getCurrent().setAttribute("user", username);
                 UI.getCurrent().navigate("home");
             } else {
-                Notification.show("Error en el inicio de sesion. Compruebe su usuario y contraseña de nuevo.");
+                Notification.show("Error en el inicio de sesión. Compruebe su usuario, contraseña o si su cuenta está activada.");
             }
         });
 
@@ -58,10 +54,22 @@ public class LoginView extends Composite<VerticalLayout> {
         getContent().add(registro);
     }
 
-    private boolean authenticate(String username, String password) {
-        Optional<Usuario> usuario = authenticatedUsuario.get();
-        if (usuario.isPresent() && passwordEncoder.matches(password, usuario.get().getPassword())) {
-            return true;
+    private boolean authenticate(String usuario, String password) {
+        Optional<Usuario> usuarioOpt = usuarioService.findByUsuario(usuario);
+        if(usuarioOpt.isPresent()) {
+            Usuario user = usuarioOpt.get();
+            if(passwordEncoder.matches(password, user.getPassword())) {
+                //Comprobar si el usuario esta activo
+                if(user.isEnabled()) {
+                    return true;
+                } else {
+                    Notification.show("La cuenta no está activada. Revisa tu correo para activar tu cuenta.");
+                }
+            } else {
+                Notification.show("Contraseña incorrecta.");
+            }
+        } else {
+            Notification.show("Usuario no encontrado.");
         }
         return false;
     }

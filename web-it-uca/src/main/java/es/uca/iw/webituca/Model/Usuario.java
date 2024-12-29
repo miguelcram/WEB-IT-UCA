@@ -3,7 +3,6 @@ package es.uca.iw.webituca.Model;
 import java.util.Collections;
 import java.util.List;
 
-import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "usuarios")   // Nombre de la tabla en la base de datos
@@ -23,8 +23,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 12, nullable = false)
-    @Unique
+    @Column(length = 12, nullable = false, unique = true)
     private String usuario;
 
     @Column(nullable = false)
@@ -39,8 +38,8 @@ public class Usuario implements UserDetails {
     @Column(name = "apellido2")
     private String apellido2;
 
+    @Email
     @Column(length = 100, nullable = false, unique = true)
-    //@Unique
     private String email;
 
     @Column(length = 15)
@@ -49,10 +48,8 @@ public class Usuario implements UserDetails {
     @Column(name = "activo")
     private boolean activo = false;
 
-    private String codigoRegistro="";
-
-    // @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Solicitante'")
-    // @Enumerated(EnumType.STRING)
+    @Column(name = "codigoRegistro", unique = true)
+    private String codigoRegistro;
 
     //Métodos de la interfaz UserDetails
     @Override
@@ -87,7 +84,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return activo;  //usuario verificado o no
     }
 
     //Getters y Setters
@@ -147,10 +144,6 @@ public class Usuario implements UserDetails {
         this.telefono = telefono;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
@@ -161,5 +154,5 @@ public class Usuario implements UserDetails {
 
     public void setCodigoRegistro(String codigoRegistro) {
         this.codigoRegistro = codigoRegistro;
-}
+    }
 }

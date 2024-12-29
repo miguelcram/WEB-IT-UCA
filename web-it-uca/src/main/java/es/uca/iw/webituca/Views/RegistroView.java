@@ -1,4 +1,4 @@
-package es.uca.iw.webituca.Views.Registro;
+package es.uca.iw.webituca.Views;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -42,6 +42,11 @@ public class RegistroView extends VerticalLayout {
                 return;
             }
 
+            if (usuarioField.getValue().isEmpty() || email.getValue().isEmpty() || password.getValue().isEmpty()) {
+                Notification.show("Todos los campos son obligatorios.");
+                return;
+            }
+            
             Usuario usuario = new Usuario();
             usuario.setNombre(nombre.getValue());
             usuario.setApellido1(apellido1.getValue());
@@ -51,9 +56,14 @@ public class RegistroView extends VerticalLayout {
             usuario.setUsuario(usuarioField.getValue());
             usuario.setPassword(password.getValue());
 
-            usuarioService.save(usuario);
+            //Generacion de codigo y envio de correo
+            Usuario savedUsuario = usuarioService.save(usuario);
 
-            Notification.show("Usuario guardado en la base de datos");
+            if (savedUsuario != null) {
+                Notification.show("Usuario registrado correctamente. Se ha enviado un correo de verificación.");
+            } else {
+                Notification.show("Error al registrar el usuario. Intente nuevamente.");
+            }
         });
 
         add(h1, form, guardarButton);

@@ -7,7 +7,9 @@ import es.uca.iw.webituca.Service.ProyectoService;
 
 import com.github.javafaker.Faker;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,10 +17,14 @@ public class DatabasePopulator implements CommandLineRunner {
     
     private final UsuarioService userService;
     private final ProyectoService proyectoService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
-    public DatabasePopulator(UsuarioService userService, ProyectoService proyectoService) {
+    public DatabasePopulator(UsuarioService userService, ProyectoService proyectoService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.proyectoService = proyectoService;
+        this.passwordEncoder = passwordEncoder;
     }
     
     public void run(String... args) throws Exception {
@@ -29,10 +35,11 @@ public class DatabasePopulator implements CommandLineRunner {
             Usuario admin = new Usuario();
             admin.setUsuario("u1111111111");
             admin.setNombre("admin");
-            admin.setPassword("admin");
+            admin.setPassword(passwordEncoder.encode("admin"));
             admin.setEmail("admin@uca.es");
+            //Usuario admin ya verificado
             admin.setActivo(true);
-            //admin.setCodigoRegistro(null);
+            admin.setCodigoRegistro(null);
             userService.save(admin);
             System.out.println("Admin created");
         }
