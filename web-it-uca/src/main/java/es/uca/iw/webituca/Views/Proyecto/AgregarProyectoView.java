@@ -93,6 +93,7 @@ public class AgregarProyectoView extends VerticalLayout {
             proyecto.setAvalador(avalador.getValue());
             proyectoService.guardarProyecto(proyecto, buffer);
             Notification.show("Proyecto guardado");
+            UI.getCurrent().access(() -> UI.getCurrent().navigate("/home"));
         });
 
         formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, avalador, upload);

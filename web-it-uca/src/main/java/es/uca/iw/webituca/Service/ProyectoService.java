@@ -5,28 +5,16 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
-import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 import es.uca.iw.webituca.Model.Proyecto;
-import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Repository.ProyectoRepository;
 import org.apache.commons.io.IOUtils;
-
-
-
-import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ProyectoService {
@@ -81,11 +69,6 @@ public class ProyectoService {
     public long count() {
         return proyectoRepository.count();
     }
-
-    // public List<Proyecto> listarProyectos() {
-    //     return proyectoRepository.findAll();
-    // }
-    
 
     public List<Proyecto> listarProyectos() {
         return proyectoRepository.findAll();
