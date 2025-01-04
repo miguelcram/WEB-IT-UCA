@@ -20,8 +20,9 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
 
-public class Header extends Composite<VerticalLayout> {
 
+public class Header extends Composite<VerticalLayout> {
+    
     public Header() {
         VerticalLayout container = getContent();
         container.setWidthFull();
@@ -68,5 +69,8 @@ public class Header extends Composite<VerticalLayout> {
         // Añadir los enlaces a la barra de navegación
         nav.add(homeLink, loginLink);
         container.add(topBar, nav);  // Añadir el contenido a la pantalla
+
+
+        
     }
 }

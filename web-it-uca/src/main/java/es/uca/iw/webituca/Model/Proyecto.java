@@ -1,6 +1,5 @@
 package es.uca.iw.webituca.Model;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -12,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -53,14 +53,12 @@ public class Proyecto {
     @Column
     private Integer prioridad;
 
-    @ManyToOne
-    @JoinColumn(name = "cartera")
+    @OneToOne
+    @JoinColumn(name = "cartera_id")
     private Cartera cartera;
 
-
-    //?cuidado con la base de datos no permite enlazar dos veces con la misma tabla
     @ManyToOne
-    @JoinColumn(name = "usuario_id", insertable = false, updatable = false)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
@@ -174,5 +172,13 @@ public class Proyecto {
 
     public Long getUsuarioId() {
         return usuario != null ? usuario.getId() : null;
+    }
+
+    public Usuario getAvalador() {
+        return avalador;
+    }
+
+    public void setAvalador(Usuario avalador) {
+        this.avalador = avalador;
     }
 }

@@ -137,5 +137,7 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findByRol(Rol.Avalador);
     }
 
+    
+
 
 }
