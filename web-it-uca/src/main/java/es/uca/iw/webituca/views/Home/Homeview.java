@@ -97,8 +97,11 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import es.uca.iw.webituca.Layout.Footer;
 import es.uca.iw.webituca.Model.Proyecto;
+import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Service.ProyectoService;
 import es.uca.iw.webituca.Views.AgregarProyectoView;
+import jakarta.annotation.security.RolesAllowed;
+import es.uca.iw.webituca.Config.AuthenticatedUser;
 
 import java.util.List;
 
@@ -106,13 +109,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "home")
 @AnonymousAllowed
+//@RolesAllowed("Admin")
 public class HomeView extends Composite<VerticalLayout> {
 
     private final ProyectoService proyectoService;
+    private final AuthenticatedUser authenticatedUser;
+    private final Usuario usuario;
 
     @Autowired
-    public HomeView(ProyectoService proyectoService) {
+    
+    public HomeView(ProyectoService proyectoService, AuthenticatedUser authenticatedUser) {
+
         this.proyectoService = proyectoService;
+        this.authenticatedUser = authenticatedUser;
+        this.usuario = authenticatedUser.get().get();
 
         VerticalLayout layout = getContent();
         layout.setSizeFull(); // Asegura que el layout ocupe todo el espacio disponible
@@ -148,26 +158,33 @@ public class HomeView extends Composite<VerticalLayout> {
         grid.setItems(proyectos_lista);
         layout.add(grid);
 
-        // Mostrar botones de sesión
-        if (userLogado == null) {
-            // Redirigir al login si no hay usuario en sesión
-            Button loginButton = new Button("Iniciar sesión", event -> UI.getCurrent().navigate("login"));
-            layout.add(loginButton);
-        } else {
-            layout.add(new Span("Bienvenido, " + userLogado + "!"));
+        // // Mostrar botones de sesión
+        // if (userLogado == null) {
+        //     // Redirigir al login si no hay usuario en sesión
+        //     Button loginButton = new Button("Iniciar sesión", event -> UI.getCurrent().navigate("login"));
+        //     layout.add(loginButton);
+        // } else {
+        //     layout.add(new Span("Bienvenido, " + userLogado + "!"));
 
-            // Botón de logout
-            Button logoutButton = new Button("Cerrar sesión", event -> {
-                VaadinSession.getCurrent().setAttribute("user", null); // Limpiar la sesión
-                UI.getCurrent().getPage().reload(); // Recargar la página para actualizar el estado del usuario
-            });
-            layout.add(logoutButton);
+        //     // Botón de logout
+        //     Button logoutButton = new Button("Cerrar sesión", event -> {
+        //         VaadinSession.getCurrent().setAttribute("user", null); // Limpiar la sesión
+        //         UI.getCurrent().getPage().reload(); // Recargar la página para actualizar el estado del usuario
+        //     });
+        //     layout.add(logoutButton);
+
+            Span mensaje_bienvenido = new Span();
+            mensaje_bienvenido.setText("Bienvenido, usuario " + usuario.getNombre() + " " + usuario.getRol());
+            mensaje_bienvenido.getElement().setAttribute("aria-label", "Bienvenido, usuario");
+            mensaje_bienvenido.getStyle().set("color", "blue");
+            getContent().add(mensaje_bienvenido);
+
 
             Button agregar = new Button("Agregar Proyecto");
             agregar.addClickListener(e -> UI.getCurrent().navigate(AgregarProyectoView.class));
             agregar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
             layout.add(agregar);
-        }
+        
 
 
     }

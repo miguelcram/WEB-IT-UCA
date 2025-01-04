@@ -1,19 +1,26 @@
 package es.uca.iw.webituca.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import es.uca.iw.webituca.Model.Rol;
 import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -43,6 +50,38 @@ public class UsuarioService {
 
     public Optional<Usuario> findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
+    }
+
+
+    // public Usuario loadUserByUsername(String username) {
+    //     Optional<Usuario> usuario = usuarioRepository.findByUsuario(username);
+    //     if(usuario.isPresent()) {
+    //         return usuario.get();
+    //     }
+    //     return null;
+    // }
+
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario user = usuarioRepository.findByUsuario(username)
+                .orElseThrow(() -> new UsernameNotFoundException("No user present with username: " + username));
+
+        // Convierte roles a una lista de autoridades
+        List<GrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority("ROLE_" + user.getRol().name())
+        );
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.isEnabled(), // Aquí puedes agregar más lógica si es necesario
+                true,
+                true,
+                true,
+                authorities
+        );
     }
 
     //Activar usuario
@@ -92,6 +131,10 @@ public class UsuarioService {
             return usuarioRepository.save(usuario);  // Guardar la actualización
         }
         return null;  // Devolver null si el usuario no se encuentra
+    }
+
+    public List<Usuario> getAvaladores() {
+        return usuarioRepository.findByRol(Rol.Avalador);
     }
 
 

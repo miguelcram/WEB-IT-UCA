@@ -1,7 +1,12 @@
 package es.uca.iw.webituca.Model;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,8 +28,9 @@ public class Proyecto {
     @Column(length = 200)
     private String descripcion;
 
-    @Column(length = 200)
-    private String estado;
+    @Column(name = "estado")
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
 
     @Column(nullable = false)
     private boolean activo;
@@ -32,9 +38,34 @@ public class Proyecto {
     @Column(nullable = false)
     private boolean permisoGestion;
 
+    @Column
+    private LocalDateTime fechaInicio;
+
+    @Column
+    private LocalDateTime fechaFin;
+
+    @Column 
+    private Float puntuacion1; // puntuacion del OTP
+
+    @Column
+    private Float puntuacion2; // puntuacion del avalador
+
+    @Column
+    private Integer prioridad;
+
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "cartera")
+    private Cartera cartera;
+
+
+    //?cuidado con la base de datos no permite enlazar dos veces con la misma tabla
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", insertable = false, updatable = false)
     private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "avalador_id")
+    private Usuario avalador;
 
     // GETTERS
     public Long getId() {
@@ -61,11 +92,11 @@ public class Proyecto {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
@@ -83,6 +114,54 @@ public class Proyecto {
 
     public void setPermisoGestion(boolean permisoGestion) {
         this.permisoGestion = permisoGestion;
+    }
+
+    public LocalDateTime getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDateTime fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDateTime getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDateTime fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public Float getPuntuacion1() {
+        return puntuacion1;
+    }
+
+    public void setPuntuacion1(Float puntuacion1) {
+        this.puntuacion1 = puntuacion1;
+    }
+
+    public Float getPuntuacion2() {
+        return puntuacion2;
+    }
+
+    public void setPuntuacion2(Float puntuacion2) {
+        this.puntuacion2 = puntuacion2;
+    }
+
+    public Integer getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(Integer prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public Cartera getCartera() {
+        return cartera;
+    }
+
+    public void setCartera(Cartera cartera) {
+        this.cartera = cartera;
     }
 
     public Usuario getUsuario() {

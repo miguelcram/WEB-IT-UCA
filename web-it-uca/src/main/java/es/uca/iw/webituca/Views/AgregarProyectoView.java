@@ -21,9 +21,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+@AnonymousAllowed
 @Route(value = "nuevo_proyecto")
-@RolesAllowed("Usuario")
+//@RolesAllowed("Usuario")
 public class AgregarProyectoView extends Composite<VerticalLayout> {
 
     private ProyectoService proyectoService;
