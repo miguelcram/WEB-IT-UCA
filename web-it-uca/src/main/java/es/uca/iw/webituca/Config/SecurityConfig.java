@@ -9,7 +9,37 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.provisioning.UserDetailsManager;
+
+// @EnableWebSecurity
+// @Configuration
+// public class SecurityConfig extends VaadinWebSecurity {
+
+//     @Bean
+//     public PasswordEncoder passwordEncoder() {
+//         return new BCryptPasswordEncoder();
+//     }
+
+//     @Override
+//     protected void configure(HttpSecurity http) throws Exception {
+
+//         http.authorizeHttpRequests(
+//                 authorize -> authorize.requestMatchers(
+//                     new AntPathRequestMatcher("/line-awesome/**/*.svg"),
+//                     new AntPathRequestMatcher("/images/*.*"),
+//                     new AntPathRequestMatcher("/api/**")
+//                 ).anonymous()
+//         );
+
+//         super.configure(http);
+//         setLoginView(http, LoginView.class);
+//     }
+// }
+
 
 @EnableWebSecurity
 @Configuration
@@ -22,17 +52,27 @@ public class SecurityConfig extends VaadinWebSecurity {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(new AntPathRequestMatcher("/layout//*.png")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/layout//*.svg")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/useractivation")).permitAll()
+        );
 
-        http.authorizeHttpRequests(
-                authorize -> authorize.requestMatchers(
-                    new AntPathRequestMatcher("/line-awesome/**/*.svg"),
-                    new AntPathRequestMatcher("/images/*.*"),
-                    new AntPathRequestMatcher("/api/**")
-                ).anonymous()
+        // Llamar a la configuración de Vaadin primero
+        setLoginView(http, LoginView.class);
+
+        http.formLogin(form -> form
+                .successHandler((request, response, authentication) -> {
+                    String redirectUrl = "/home"; // Redirección predeterminada
+
+                    if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_Admin"))) {
+                        redirectUrl = "/home-admin";
+                    }
+                    response.sendRedirect(redirectUrl);
+                })
+                .permitAll()
         );
 
         super.configure(http);
-        setLoginView(http, LoginView.class);
-        
     }
 }

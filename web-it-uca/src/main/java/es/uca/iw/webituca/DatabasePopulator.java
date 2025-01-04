@@ -46,7 +46,7 @@ public class DatabasePopulator implements CommandLineRunner {
 
         // Crear proyectos con faker si no existe ninguno
         if(proyectoService.count() == 0) {
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 10; i++) {
                 Proyecto proyecto = new Proyecto();
                 proyecto.setTitulo(faker.book().title());
                 proyecto.setDescripcion(faker.lorem().sentence(10));

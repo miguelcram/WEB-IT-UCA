@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * and some desktop browsers.
  *
  */
-@SpringBootApplication
+@SpringBootApplication 
 @Theme(value = "web-it-uca")
 public class Application implements AppShellConfigurator {
 

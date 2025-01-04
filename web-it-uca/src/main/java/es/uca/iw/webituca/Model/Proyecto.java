@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,7 +32,11 @@ public class Proyecto {
     @Column(nullable = false)
     private boolean permisoGestion;
 
-    //GETTERS
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    // GETTERS
     public Long getId() {
         return id;
     }
@@ -73,5 +79,21 @@ public class Proyecto {
 
     public boolean isPermisoGestion() {
         return permisoGestion;
+    }
+
+    public void setPermisoGestion(boolean permisoGestion) {
+        this.permisoGestion = permisoGestion;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Long getUsuarioId() {
+        return usuario != null ? usuario.getId() : null;
     }
 }

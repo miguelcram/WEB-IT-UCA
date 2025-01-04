@@ -1,5 +1,6 @@
 package es.uca.iw.webituca.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.uca.iw.webituca.Model.Rol;
 import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Repository.UsuarioRepository;
 
@@ -51,6 +53,7 @@ public class UsuarioService {
             if(usuario.getCodigoRegistro() != null && usuario.getCodigoRegistro().equals(codigoRegistro)) {
                 usuario.setActivo(true);
                 usuario.setCodigoRegistro(null);
+                usuario.setRol(Rol.Usuario);
                 usuarioRepository.save(usuario);
                 System.out.println("Usuario activado con email: " + email);
                 return true;    //Usuario activado
@@ -67,4 +70,29 @@ public class UsuarioService {
     public long count() {
         return usuarioRepository.count();
     }
+
+
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    public Usuario saveOrUpdateUsuario(Usuario usuario) {
+    return usuarioRepository.save(usuario);
+    }
+
+    public void deleteUsuario(Long id) {
+    usuarioRepository.deleteById(id);
+    }
+
+    public Usuario updateRol(Long usuarioId, Rol nuevoRol) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setRol(nuevoRol);  // Cambiar el rol
+            return usuarioRepository.save(usuario);  // Guardar la actualización
+        }
+        return null;  // Devolver null si el usuario no se encuentra
+    }
+
+
 }

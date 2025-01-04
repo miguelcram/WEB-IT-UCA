@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,13 +47,19 @@ public class Usuario implements UserDetails {
     @Column(length = 15)
     private String telefono;
 
+    @Column(name = "rol")
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
+
     @Column(name = "activo")
     private boolean activo = false;
 
     @Column(name = "codigoRegistro", unique = true)
     private String codigoRegistro;
 
-    //Métodos de la interfaz UserDetails
+
+
+    // Métodos de la interfaz UserDetails
     @Override
     public List<GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
@@ -84,10 +92,12 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return activo;  //usuario verificado o no
+        return activo;  // usuario verificado o no
     }
 
-    //Getters y Setters
+
+
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -154,5 +164,13 @@ public class Usuario implements UserDetails {
 
     public void setCodigoRegistro(String codigoRegistro) {
         this.codigoRegistro = codigoRegistro;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }

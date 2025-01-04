@@ -1,33 +1,63 @@
 package es.uca.iw.webituca.Layout;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Nav;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
-public class Header extends Composite<HorizontalLayout> {
-    private H1 title;
+public class Header extends Composite<VerticalLayout> {
 
     public Header() {
-        HorizontalLayout layout = getContent();
-        layout.setWidthFull();
-        layout.getStyle().set("background-color", "lightgreen");
-        layout.setPadding(true);
-        layout.setSpacing(true);
+        VerticalLayout container = getContent();
+        container.setWidthFull();
+        container.getStyle().set("background-color", "#2c3e50");
+        container.getStyle().set("padding", "10px 20px");
 
-        title = new H1("PROYECTOS IW PRUEBAS");
+        // Título y logo
+        HorizontalLayout topBar = new HorizontalLayout();
+        topBar.setWidthFull();
+        topBar.setAlignItems(Alignment.CENTER);
+
+        Image logo = new Image("frontend/images/logo.png", "UCA Logo");
+        logo.setHeight("50px");
+
+        H1 title = new H1("Universidad de Cádiz");
+        title.getStyle().set("color", "white");
         title.getStyle().set("margin", "0");
 
-        Button homeButton = new Button("Home", event -> UI.getCurrent().navigate("/home"));
-        Button aboutButton = new Button("About", event -> UI.getCurrent().navigate("/about"));
-        Button contactButton = new Button("Contact", event -> UI.getCurrent().navigate("/contact"));
-        Button loginButton = new Button("Login", event -> UI.getCurrent().navigate("/login"));
+        topBar.add(logo, title);
+        topBar.setAlignItems(Alignment.CENTER);
+        topBar.expand(title);
 
-        layout.add(title, homeButton, aboutButton, contactButton, loginButton);
-    }
+        // Barra de navegación
+        Nav nav = new Nav();
+        nav.getStyle().set("display", "flex");
+        nav.getStyle().set("justify-content", "center");
+        nav.getStyle().set("background-color", "#34495e");
+        nav.getStyle().set("padding", "10px 0");
 
-    public void setTitle(String titleText) {
-        title.setText(titleText);
+        RouterLink estudiantes = new RouterLink();
+        RouterLink investigacion = new RouterLink();
+        RouterLink internacional = new RouterLink();
+        RouterLink vidaUniversitaria = new RouterLink();
+        //RouterLink uca = new RouterLink("UCA", YourViewClass.class);
+
+        estudiantes.getStyle().set("color", "white");
+        investigacion.getStyle().set("color", "white");
+        internacional.getStyle().set("color", "white");
+        vidaUniversitaria.getStyle().set("color", "white");
+        RouterLink uca = new RouterLink();
+        uca.getStyle().set("color", "white");
+
+        nav.add(estudiantes, investigacion, internacional, vidaUniversitaria, uca);
+
+        container.add(topBar, nav);
     }
 }
