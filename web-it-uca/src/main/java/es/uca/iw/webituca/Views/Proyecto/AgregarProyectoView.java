@@ -6,11 +6,14 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
@@ -24,6 +27,7 @@ import es.uca.iw.webituca.Service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import es.uca.iw.webituca.Config.AuthenticatedUser;
 
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -63,6 +67,20 @@ public class AgregarProyectoView extends VerticalLayout {
         avalador.setItems(avaladores);
         avalador.setItemLabelGenerator(Usuario::getNombre);
 
+
+
+        //la subida
+        // Campo de subida de archivos
+        MemoryBuffer buffer = new MemoryBuffer();
+        Upload upload = new Upload(buffer);
+        upload.setAcceptedFileTypes("application/pdf");
+        upload.setMaxFiles(1);
+        upload.setMaxFileSize(10 * 1024 * 1024); // 10 MB
+        upload.setDropLabel(new Span("Arrastra un archivo PDF aquí o haz clic para seleccionar"));
+
+        
+
+
         Button saveButton = new Button("Guardar", event -> {
             Proyecto proyecto = new Proyecto();
             proyecto.setTitulo(tituloField.getValue());
@@ -73,11 +91,11 @@ public class AgregarProyectoView extends VerticalLayout {
             proyecto.setUsuario(authenticatedUser.get().get());
             proyecto.setCartera(cartera);
             proyecto.setAvalador(avalador.getValue());
-            proyectoService.save(proyecto);
+            proyectoService.guardarProyecto(proyecto, buffer);
             Notification.show("Proyecto guardado");
         });
 
-        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, avalador);
+        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, avalador, upload);
         add(formLayout, saveButton);
     }
 }

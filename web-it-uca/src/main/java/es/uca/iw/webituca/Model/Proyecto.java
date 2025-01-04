@@ -65,7 +65,10 @@ public class Proyecto {
     @JoinColumn(name = "avalador_id")
     private Usuario avalador;
 
-    // GETTERS
+    @Column
+    private String archivoPath;
+
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -180,5 +183,13 @@ public class Proyecto {
 
     public void setAvalador(Usuario avalador) {
         this.avalador = avalador;
+    }
+
+    public String getArchivoPath() {
+        return archivoPath;
+    }
+
+    public void setArchivoPath(String archivoPath) {
+        this.archivoPath = archivoPath;
     }
 }

@@ -51,7 +51,7 @@ public class DatabasePopulator implements CommandLineRunner {
                 proyecto.setTitulo(faker.book().title());
                 proyecto.setDescripcion(faker.lorem().sentence(10));
                 proyecto.setActivo(faker.bool().bool());
-                proyectoService.save(proyecto);
+                proyectoService.guardarProyecto(proyecto, null);
                 System.out.println("Proyecto creado: " + proyecto.getTitulo());
             }
         }
