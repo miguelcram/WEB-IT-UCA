@@ -25,11 +25,6 @@ public class MainLayout extends Composite<VerticalLayout> implements RouterLayou
 
         getContent().add(header, footer);
     }
-
-   
-    
-
   
-    
 
 }

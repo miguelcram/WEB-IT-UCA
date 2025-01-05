@@ -33,9 +33,6 @@ public class Proyecto {
     private Estado estado;
 
     @Column(nullable = false)
-    private boolean activo;
-
-    @Column(nullable = false)
     private boolean permisoGestion;
 
     @Column

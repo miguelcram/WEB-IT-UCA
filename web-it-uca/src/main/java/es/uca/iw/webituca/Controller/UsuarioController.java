@@ -13,10 +13,10 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/registro")
-    public String mostrarRegistro() {
-        return "registro";
-    }
+    // @GetMapping("/registro")
+    // public String mostrarRegistro() {
+    //     return "registro";
+    // }
 
     @GetMapping("/activar")
     public String activarCuenta(@RequestParam("email") String email, @RequestParam("codigo") String codigoRegistro, Model model) {

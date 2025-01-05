@@ -1,5 +1,6 @@
 package es.uca.iw.webituca.Views;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
@@ -11,6 +12,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+import es.uca.iw.webituca.Model.Rol;
 import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +57,19 @@ public class RegistroView extends VerticalLayout {
             usuario.setTelefono(telefono.getValue());
             usuario.setUsuario(usuarioField.getValue());
             usuario.setPassword(password.getValue());
+            usuario.setRol(Rol.Usuario);
 
             //Generacion de codigo y envio de correo
             Usuario savedUsuario = usuarioService.save(usuario);
+            
 
             if (savedUsuario != null) {
                 Notification.show("Usuario registrado correctamente. Se ha enviado un correo de verificación.");
             } else {
                 Notification.show("Error al registrar el usuario. Intente nuevamente.");
             }
+
+            UI.getCurrent().access(() -> UI.getCurrent().navigate("/home"));
         });
 
         add(h1, form, guardarButton);

@@ -4,6 +4,7 @@ import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Model.Proyecto;
 import es.uca.iw.webituca.Service.UsuarioService;
 import es.uca.iw.webituca.Service.ProyectoService;
+import es.uca.iw.webituca.Model.Estado;
 
 import com.github.javafaker.Faker;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class DatabasePopulator implements CommandLineRunner {
@@ -50,7 +52,7 @@ public class DatabasePopulator implements CommandLineRunner {
                 Proyecto proyecto = new Proyecto();
                 proyecto.setTitulo(faker.book().title());
                 proyecto.setDescripcion(faker.lorem().sentence(10));
-                proyecto.setActivo(faker.bool().bool());
+                proyecto.setEstado(faker.options().option(Estado.values()));
                 proyectoService.guardarProyecto(proyecto, null);
                 System.out.println("Proyecto creado: " + proyecto.getTitulo());
             }

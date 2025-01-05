@@ -15,31 +15,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.UserDetailsManager;
 
-// @EnableWebSecurity
-// @Configuration
-// public class SecurityConfig extends VaadinWebSecurity {
-
-//     @Bean
-//     public PasswordEncoder passwordEncoder() {
-//         return new BCryptPasswordEncoder();
-//     }
-
-//     @Override
-//     protected void configure(HttpSecurity http) throws Exception {
-
-//         http.authorizeHttpRequests(
-//                 authorize -> authorize.requestMatchers(
-//                     new AntPathRequestMatcher("/line-awesome/**/*.svg"),
-//                     new AntPathRequestMatcher("/images/*.*"),
-//                     new AntPathRequestMatcher("/api/**")
-//                 ).anonymous()
-//         );
-
-//         super.configure(http);
-//         setLoginView(http, LoginView.class);
-//     }
-// }
-
 
 @EnableWebSecurity
 @Configuration
