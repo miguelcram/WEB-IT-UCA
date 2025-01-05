@@ -98,13 +98,6 @@ public class Proyecto {
         this.estado = estado;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
 
     public boolean isPermisoGestion() {
         return permisoGestion;

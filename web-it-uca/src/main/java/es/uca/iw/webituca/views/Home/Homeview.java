@@ -18,6 +18,7 @@ import es.uca.iw.webituca.Service.ProyectoService;
 import es.uca.iw.webituca.Views.Proyecto.AgregarProyectoView;
 import jakarta.annotation.security.RolesAllowed;
 import es.uca.iw.webituca.Config.AuthenticatedUser;
+import es.uca.iw.webituca.Views.MainLayout;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class HomeView extends Composite<VerticalLayout> {
         grid.setItems(proyectos); // Establece los elementos en el Grid
         grid.addColumn(Proyecto::getTitulo).setHeader("Titulo");
         grid.addColumn(Proyecto::getDescripcion).setHeader("Descripcion");
-        grid.addColumn(proyecto -> proyecto.isActivo() ? "Activo" : "Inactivo").setHeader("Estado");
+
 
         // Columna dinámica para gestión de proyectos según permisos del usuario
         grid.addComponentColumn(proyecto -> {
