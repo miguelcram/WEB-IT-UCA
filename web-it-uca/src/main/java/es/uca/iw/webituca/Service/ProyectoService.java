@@ -11,24 +11,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-
 import es.uca.iw.webituca.Model.Proyecto;
 import es.uca.iw.webituca.Repository.ProyectoRepository;
 import org.apache.commons.io.IOUtils;
 
 @Service
 public class ProyectoService {
-    
+
     @Autowired
     private ProyectoRepository proyectoRepository;
 
     public Proyecto guardarProyecto(Proyecto proyecto, MemoryBuffer memoryBuffer) {
-        String filePath = guardarFile(memoryBuffer, "src/main/resources/static/uploads", proyecto.getUsuario().getNombre() + ".pdf");
-        proyecto.setArchivoPath(filePath);
+        if (memoryBuffer != null) {
+            String filePath = guardarFile(memoryBuffer, "src/main/resources/static/uploads", proyecto.getUsuario().getNombre() + ".pdf");
+            proyecto.setArchivoPath(filePath);
+        }
         return proyectoRepository.save(proyecto);
     }
 
-   
     public static String guardarFile(MemoryBuffer buffer, String targetDirPath, String fileName) {
         String filePath = null;
 

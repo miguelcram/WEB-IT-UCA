@@ -31,6 +31,7 @@ import java.util.List;
 @Route(value = "admin-cartera")
 @PageTitle("Admin-Cartera")
 @RolesAllowed("Admin")
+//@AnonimousAllowed
 public class CarteraMenuView extends Composite<VerticalLayout> {
 
     private final CarteraService carteraService;

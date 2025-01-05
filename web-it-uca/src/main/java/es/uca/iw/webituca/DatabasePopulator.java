@@ -8,6 +8,8 @@ import es.uca.iw.webituca.Model.Estado;
 
 import com.github.javafaker.Faker;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,11 +50,14 @@ public class DatabasePopulator implements CommandLineRunner {
 
         // Crear proyectos con faker si no existe ninguno
         if(proyectoService.count() == 0) {
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 1; i++) {
                 Proyecto proyecto = new Proyecto();
                 proyecto.setTitulo(faker.book().title());
                 proyecto.setDescripcion(faker.lorem().sentence(10));
                 proyecto.setEstado(faker.options().option(Estado.values()));
+                proyecto.setFechaInicio(LocalDateTime.now());
+                proyecto.setFechaFin(LocalDateTime.now().plusDays(1));
+                proyecto.setUsuario(userService.findByUsuario("u1111111111").get());
                 proyectoService.guardarProyecto(proyecto, null);
                 System.out.println("Proyecto creado: " + proyecto.getTitulo());
             }

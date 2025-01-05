@@ -3,6 +3,7 @@ package es.uca.iw.webituca.Views.VistasAdmin;
 import es.uca.iw.webituca.Model.Rol;
 import es.uca.iw.webituca.Model.Usuario;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
@@ -115,7 +116,10 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
             dialog.close();
         });
 
-        Button cancelarBtn = new Button("Cancelar", event -> dialog.close());
+        
+        Button cancelarBtn = new Button("Cancelar", event -> {
+            UI.getCurrent().navigate("home"); // Redirige a la vista "home"
+        });
         HorizontalLayout botones = new HorizontalLayout(guardarBtn, cancelarBtn);
         botones.setJustifyContentMode(HorizontalLayout.JustifyContentMode.CENTER);
 
