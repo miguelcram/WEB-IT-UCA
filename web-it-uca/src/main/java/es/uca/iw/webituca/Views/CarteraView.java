@@ -1,7 +1,5 @@
 package es.uca.iw.webituca.Views;
 
-import java.time.format.DateTimeFormatter;
-
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -13,6 +11,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import es.uca.iw.webituca.Model.Cartera;
 import es.uca.iw.webituca.Service.CarteraService;
@@ -21,10 +20,11 @@ import es.uca.iw.webituca.Service.CarteraService;
 @PageTitle("Cartera-Actual")
 @AnonymousAllowed
 public class CarteraView extends Composite<VerticalLayout> {
-    private final CarteraService carteraService;
+    
+    @Autowired
+    private CarteraService carteraService;
 
-    public CarteraView(CarteraService carteraService) {
-        this.carteraService = carteraService;
+    public CarteraView() {
 
         // Obtén la cartera activa a través del servicio
         Cartera cartera = carteraService.getCarteraActual().orElse(null);

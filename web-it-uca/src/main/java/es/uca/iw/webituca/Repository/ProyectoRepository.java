@@ -9,8 +9,8 @@ import es.uca.iw.webituca.Model.Usuario;
 
 public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
 
-    //Optional<Proyecto> findByProyecto(String proyecto);
-    //Optional<Proyecto> findByEmail(String email);
+    Optional<Proyecto> findById(Long proyecto);
+    //Optional<Proyecto> buscarPorEmail(String email);
     List<Proyecto> findAll();
     List<Proyecto> findByUsuario(Usuario usuario);
 }

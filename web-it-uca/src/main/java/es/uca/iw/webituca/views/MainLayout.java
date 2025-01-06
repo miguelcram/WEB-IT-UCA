@@ -1,11 +1,11 @@
 package es.uca.iw.webituca.Views;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.UI;
+/*import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;*/
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Layout;
 import com.vaadin.flow.router.RouterLayout;

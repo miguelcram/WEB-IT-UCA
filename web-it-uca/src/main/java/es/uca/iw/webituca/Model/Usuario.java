@@ -57,8 +57,6 @@ public class Usuario implements UserDetails {
     @Column(name = "codigoRegistro", unique = true)
     private String codigoRegistro;
 
-
-
     // Métodos de la interfaz UserDetails
     @Override
     public List<GrantedAuthority> getAuthorities() {
@@ -94,8 +92,6 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return activo;  // usuario verificado o no
     }
-
-
 
     // Getters y Setters
     public Long getId() {

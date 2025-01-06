@@ -30,7 +30,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-    private String getServerUrl() {
+    public String getServerUrl() {
         return "http://" + serverHost + ":" + serverPort + "/";
     }
 
@@ -58,7 +58,7 @@ public class EmailService {
         return true;
     }
 
-    public boolean enviarCorreo(String to, String subject, String body) {
+    public boolean enviarEmail(String to, String subject, String body) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
 

@@ -1,6 +1,5 @@
 package es.uca.iw.webituca.Views.Home;
 
-
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -15,15 +14,18 @@ import es.uca.iw.webituca.Config.AuthenticatedUser;
 import es.uca.iw.webituca.Views.VistasAdmin.CarteraMenuView;
 import es.uca.iw.webituca.Views.VistasAdmin.UsuarioUpdateView;
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "/home-admin")
 //@AnonymousAllowed
 @RolesAllowed("Admin")
 @PageTitle("Home-Admin")
 public class HomeAdminView extends Composite<VerticalLayout> {
-    private final AuthenticatedUser authenticatedUser;
-    public HomeAdminView(AuthenticatedUser authenticatedUser) {
-        this.authenticatedUser = authenticatedUser;
+    
+    @Autowired
+    private AuthenticatedUser authenticatedUser;
+    
+    public HomeAdminView() {
         crearTitulo();
 
         botones();
@@ -37,7 +39,6 @@ public class HomeAdminView extends Composite<VerticalLayout> {
             else {
                 logoutButton.setVisible(false);
             }
-            
     }
 
     private void crearTitulo() {

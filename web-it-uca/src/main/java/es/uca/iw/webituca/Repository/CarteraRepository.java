@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CarteraRepository extends JpaRepository<Cartera, Long> {
-  
+
     Optional<Cartera> findFirstByFechaCreacionLessThanEqualAndFechaFinGreaterThanEqual(LocalDateTime startDateTime, LocalDateTime endDateTime);
 }
 

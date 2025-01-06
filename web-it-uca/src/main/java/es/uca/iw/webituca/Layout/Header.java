@@ -1,7 +1,7 @@
 package es.uca.iw.webituca.Layout;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.HasStyle;
+//import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Nav;
@@ -10,15 +10,14 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.theme.lumo.LumoUtility;
+//import com.vaadin.flow.server.VaadinService;
+//import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import es.uca.iw.webituca.Views.LoginView;
 import es.uca.iw.webituca.Views.Home.HomeView;
+import es.uca.iw.webituca.Views.Usuario.LoginView;
 
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.router.Route;
 
 
 public class Header extends Composite<VerticalLayout> {

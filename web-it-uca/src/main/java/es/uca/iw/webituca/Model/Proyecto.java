@@ -2,6 +2,7 @@ package es.uca.iw.webituca.Model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -50,7 +50,7 @@ public class Proyecto {
     @Column
     private Integer prioridad;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cartera_id")
     private Cartera cartera;
 
@@ -97,7 +97,6 @@ public class Proyecto {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-
 
     public boolean isPermisoGestion() {
         return permisoGestion;
