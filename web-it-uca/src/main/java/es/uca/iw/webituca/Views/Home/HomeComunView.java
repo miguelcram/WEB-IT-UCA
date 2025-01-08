@@ -2,7 +2,9 @@ package es.uca.iw.webituca.Views.Home;
 
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -42,6 +44,10 @@ public class HomeComunView extends Composite<VerticalLayout> {
 
         // Mensaje de bienvenida
         Div mensajeBienvenida = new Div();
+        Button logoutButton = new Button("Cerrar sesión", event -> {
+            authenticatedUser.logout(); // Limpiar la sesión
+            UI.getCurrent().getPage().reload(); // Recargar la página para actualizar el estado del usuario
+        });
         usuarioOpt.ifPresentOrElse(
             usuario -> {
                 mensajeBienvenida.setText("Bienvenido, " + usuario.getNombre() + " (" + usuario.getRol() + ")");
@@ -49,7 +55,7 @@ public class HomeComunView extends Composite<VerticalLayout> {
             },
             () -> mensajeBienvenida.setText("Bienvenido, usuario invitado")
         );
-        layout.add(mensajeBienvenida);
+        layout.add(mensajeBienvenida, logoutButton);
     }
 
     private void agregarBotonesPorRol(VerticalLayout layout, Rol rol) {
@@ -74,6 +80,16 @@ public class HomeComunView extends Composite<VerticalLayout> {
                 layout.add(crearBoton("Ver Reportes", "ver-reportes"));
                 break;
 
+            case Avalador:
+                layout.add(crearBoton("Ver Proyectos", "ver-proyectos"));
+                layout.add(crearBoton("Ver Reportes", "ver-reportes"));
+                break;
+
+            case Otp:
+                layout.add(crearBoton("Ver Proyectos", "ver-proyectos"));
+                layout.add(crearBoton("Ver Reportes", "ver-reportes"));
+                break;
+
             default:
                 layout.add(new Div(new Button("No hay acciones disponibles para este rol")));
         }
@@ -81,7 +97,10 @@ public class HomeComunView extends Composite<VerticalLayout> {
 
     private Button crearBoton(String texto, String ruta) {
         Button boton = new Button(texto);
+        boton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         boton.addClickListener(e -> boton.getUI().ifPresent(ui -> ui.navigate(ruta)));
         return boton;
     }
+
+    
 }
