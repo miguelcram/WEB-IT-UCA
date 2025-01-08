@@ -1,4 +1,4 @@
-package es.uca.iw.webituca.Views;
+package es.uca.iw.webituca.Views.Usuario;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;

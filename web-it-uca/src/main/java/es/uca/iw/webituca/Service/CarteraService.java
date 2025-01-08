@@ -40,8 +40,13 @@ public class CarteraService {
     public void deleteCartera(Long id) {
         carteraRepository.deleteById(id);
     }
+    
     public Optional<Cartera> getCarteraActual() {
         LocalDateTime now = LocalDateTime.now();
         return carteraRepository.findFirstByFechaCreacionLessThanEqualAndFechaFinGreaterThanEqual(now, now);
+    }
+
+    public long count() {
+        return carteraRepository.count();
     }
 }

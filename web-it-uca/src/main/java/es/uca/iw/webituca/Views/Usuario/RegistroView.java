@@ -1,4 +1,4 @@
-package es.uca.iw.webituca.Views;
+package es.uca.iw.webituca.Views.Usuario;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -57,7 +57,7 @@ public class RegistroView extends VerticalLayout {
             usuario.setTelefono(telefono.getValue());
             usuario.setUsuario(usuarioField.getValue());
             usuario.setPassword(password.getValue());
-            usuario.setRol(Rol.Usuario);
+            usuario.setRol(Rol.USUARIO);
 
             //Generacion de codigo y envio de correo
             Usuario savedUsuario = usuarioService.save(usuario);

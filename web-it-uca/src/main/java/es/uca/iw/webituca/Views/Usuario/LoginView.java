@@ -1,9 +1,8 @@
-package es.uca.iw.webituca.Views;
-import es.uca.iw.webituca.Service.UsuarioService;
+package es.uca.iw.webituca.Views.Usuario;
+
+import es.uca.iw.webituca.Views.MainLayout;
 import es.uca.iw.webituca.Config.AuthenticatedUser;
 import es.uca.iw.webituca.Model.Usuario;
-
-import java.util.Optional;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
@@ -18,8 +17,7 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-
-
+import java.util.Optional;
 
 @AnonymousAllowed
 @PageTitle("Login")

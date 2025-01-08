@@ -92,7 +92,7 @@ public class UsuarioService implements UserDetailsService {
             if(usuario.getCodigoRegistro() != null && usuario.getCodigoRegistro().equals(codigoRegistro)) {
                 usuario.setActivo(true);
                 usuario.setCodigoRegistro(null);
-                usuario.setRol(Rol.Usuario);
+                usuario.setRol(Rol.USUARIO);
                 usuarioRepository.save(usuario);
                 System.out.println("Usuario activado con email: " + email);
                 return true;    //Usuario activado
@@ -109,7 +109,6 @@ public class UsuarioService implements UserDetailsService {
     public long count() {
         return usuarioRepository.count();
     }
-
 
     public List<Usuario> getAllUsuarios() {
         return usuarioRepository.findAll();
@@ -134,10 +133,7 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public List<Usuario> getAvaladores() {
-        return usuarioRepository.findByRol(Rol.Avalador);
+        return usuarioRepository.findByRol(Rol.AVALADOR);
     }
-
     
-
-
 }
