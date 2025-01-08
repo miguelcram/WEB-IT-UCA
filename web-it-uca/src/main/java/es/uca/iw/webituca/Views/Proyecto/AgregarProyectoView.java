@@ -30,26 +30,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-@RolesAllowed({"Avalador","Ceo","Usuario", "Otp"})
-@Route(value = "agregar-proyecto")
+@RolesAllowed({"AVALADOR","CIO","USUARIO", "OTP"})
+@Route(value = "proyecto/nuevo/")
 public class AgregarProyectoView extends VerticalLayout {
 
-    @Autowired
-    private ProyectoService proyectoService;
+    private final ProyectoService proyectoService;
 
-    @Autowired
-    private AuthenticatedUser authenticatedUser;
+    private final AuthenticatedUser authenticatedUser;
     
-    @Autowired
-    private CarteraService carteraService;
+    private final CarteraService carteraService;
     
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    private final EmailService emailService;
 
     @Autowired
-    private EmailService emailService;
-
-    public AgregarProyectoView() {
+    public AgregarProyectoView(ProyectoService proyectoService, AuthenticatedUser authenticatedUser, CarteraService carteraService, UsuarioService usuarioService, EmailService emailService) {
+        this.proyectoService = proyectoService;
+        this.authenticatedUser = authenticatedUser;
+        this.carteraService = carteraService;
+        this.usuarioService = usuarioService;
+        this.emailService = emailService;
 
         Cartera cartera = carteraService.getCarteraActual().orElse(null);
         if (cartera == null) {
@@ -112,10 +113,10 @@ public class AgregarProyectoView extends VerticalLayout {
         if (emailAvalador != null && !emailAvalador.isEmpty()) {
             // Crear el asunto y cuerpo del correo
             String subject = "Nuevo proyecto por avalar: " + proyecto.getTitulo();
-            String avalarUrl = emailService.getServerUrl() + "/proyecto/avalar/" + proyecto.getId();
             String body = "Estimado/a " + avalador.getNombre()
-                + ",\n\nTienes un nuevo proyecto por avalar. Para verlo y gestionarlo, accede al siguiente enlace:\n"
-                + avalarUrl + "\n\nSaludos,\nEl equipo de WEB-IT-UCA";
+                + ",\n\nTienes un nuevo proyecto por avalar. Para verlo y gestionarlo, accede a la sección de proyectos iniciando sesión.\n"
+                + "El proyecto es " + proyecto.getTitulo() + " y es presentado por el usuario: " + proyecto.getUsuario().getNombre()
+                + "\n\nSaludos,\nEl equipo de WEB-IT-UCA";
             
             // Enviar el correo
             emailService.enviarEmail(emailAvalador, subject, body);

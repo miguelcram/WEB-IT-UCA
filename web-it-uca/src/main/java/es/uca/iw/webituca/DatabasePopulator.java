@@ -69,15 +69,17 @@ public class DatabasePopulator implements CommandLineRunner {
         }
 
         // Crear una única cartera
-        Cartera cartera = new Cartera();
-        cartera.setNombre(faker.company().name());
-        cartera.setDescripcion(faker.lorem().sentence(20));
-        cartera.setFechaCreacion(LocalDateTime.now().minusDays(faker.number().numberBetween(10, 100)));
-        cartera.setFechaFin(LocalDateTime.now().plusDays(faker.number().numberBetween(10, 100)));
-        cartera.setNumero_horas((float) faker.number().randomDouble(2, 100, 1000));
-        cartera.setPresupuesto((float) faker.number().randomDouble(2, 1000, 100000));
-        carteraService.createCartera(cartera);
-        System.out.println("Cartera creada: " + cartera.getNombre());
+        if(carteraService.count() == 0) {
+            Cartera cartera = new Cartera();
+            cartera.setNombre(faker.company().name());
+            cartera.setDescripcion(faker.lorem().sentence(20));
+            cartera.setFechaCreacion(LocalDateTime.now().minusDays(faker.number().numberBetween(10, 100)));
+            cartera.setFechaFin(LocalDateTime.now().plusDays(faker.number().numberBetween(10, 100)));
+            cartera.setNumero_horas((float) faker.number().randomDouble(2, 100, 1000));
+            cartera.setPresupuesto((float) faker.number().randomDouble(2, 1000, 100000));
+            carteraService.createCartera(cartera);
+            System.out.println("Cartera creada: " + cartera.getNombre());
+        }
             
         // Crear 5 proyectos
         if(proyectoService.count() == 0) {
@@ -92,7 +94,8 @@ public class DatabasePopulator implements CommandLineRunner {
                 proyecto.setPuntuacion1((float) faker.number().randomDouble(1, 0, 10));
                 proyecto.setPuntuacion2((float) faker.number().randomDouble(1, 0, 10));
                 proyecto.setPrioridad(faker.number().numberBetween(1, 5));
-                proyecto.setCartera(cartera);
+                Long idCarteraLong = (long) 1;
+                proyecto.setCartera(carteraService.getCarteraById(idCarteraLong));
 
                 // Asignar aleatoriamente un usuario al proyecto (de los 3 usuarios creados)
                 List<Usuario> usuarios = usuarioService.getAllUsuarios();

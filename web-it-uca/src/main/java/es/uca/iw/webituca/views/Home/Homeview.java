@@ -8,9 +8,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import es.uca.iw.webituca.Model.Proyecto;
+import es.uca.iw.webituca.Model.Rol;
 import es.uca.iw.webituca.Service.ProyectoService;
 import es.uca.iw.webituca.Config.AuthenticatedUser;
 
@@ -22,13 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AnonymousAllowed
 public class HomeView extends Composite<VerticalLayout> {
 
-    @Autowired
-    private ProyectoService proyectoService;
-    
-    @Autowired
-    private AuthenticatedUser authenticatedUser;
+    private final ProyectoService proyectoService;
+    private final AuthenticatedUser authenticatedUser;
 
-    public HomeView() {
+    @Autowired
+    public HomeView(ProyectoService proyectoService, AuthenticatedUser authenticatedUser) {
+        this.proyectoService = proyectoService;
+        this.authenticatedUser = authenticatedUser;
 
         VerticalLayout layout = getContent();
         layout.setSizeFull(); // Asegura que el layout ocupe todo el espacio disponible
@@ -37,8 +39,10 @@ public class HomeView extends Composite<VerticalLayout> {
 
         layout.add(new Span("Esto es Home view, aquí se mostrará información de proyectos actuales"));
 
+        String userLogado = (String) VaadinSession.getCurrent().getAttribute("user");
+
         // Obtener lista de proyectos desde el servicio
-        List<Proyecto> proyectos = proyectoService.listarProyectos(); // Obtiene lista de proyectos
+        List<Proyecto> proyectos = proyectoService.listarProyectos();
 
         // Configuración de la Grid con la lista de proyectos
         Grid<Proyecto> grid = new Grid<>(Proyecto.class, false);
@@ -46,22 +50,11 @@ public class HomeView extends Composite<VerticalLayout> {
         grid.addColumn(Proyecto::getTitulo).setHeader("Titulo");
         grid.addColumn(Proyecto::getDescripcion).setHeader("Descripcion");
 
-
-        // Columna dinámica para gestión de proyectos según permisos del usuario
-        grid.addComponentColumn(proyecto -> {
-            if (proyecto.isPermisoGestion()) {
-                return new Button("Gestionar", event -> gestionarProyecto(proyecto));
-            } else {
-                return new Span(); // No mostrar botón si no tiene permisos
-            }
-        }).setHeader("Acción");
-
-
-        List<Proyecto> proyectos_lista = proyectoService.listarProyectos();
-        grid.setItems(proyectos_lista);
+        //List<Proyecto> proyectos_lista = proyectoService.listarProyectos();
+        grid.setItems(proyectos);
         layout.add(grid);
         
-       //Muestra nombre de usuario registrado actualmente
+        //Muestra nombre de usuario registrado actualmente
         if(authenticatedUser.get().isPresent()) {
             Span mensaje_bienvenido = new Span();
             mensaje_bienvenido.setText("Bienvenido, usuario " + authenticatedUser.get().get().getUsername());
@@ -76,10 +69,20 @@ public class HomeView extends Composite<VerticalLayout> {
             getContent().add(mensaje_bienvenido);
         }
 
+        // Botón para agregar proyectos
         Button agregar = new Button("Agregar Proyecto");
-        agregar.addClickListener(e -> UI.getCurrent().navigate("agregar-proyecto"));
+        agregar.addClickListener(e -> UI.getCurrent().navigate("proyecto/nuevo"));
         agregar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         layout.add(agregar);
+
+        // Botón para avalar proyectos para AVALADORES
+        if (authenticatedUser.get().isPresent() && 
+            authenticatedUser.get().get().getRol() == Rol.AVALADOR) {
+            Button avalarProyectosButton = new Button("Avalar Proyectos");
+            avalarProyectosButton.addClickListener(e -> UI.getCurrent().navigate("proyecto/avalar"));
+            //avalarProyectosButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+            layout.add(avalarProyectosButton);
+        }
         
         Button logoutButton = new Button("Cerrar sesión", event -> {
             authenticatedUser.logout(); // Limpiar la sesión
@@ -93,7 +96,7 @@ public class HomeView extends Composite<VerticalLayout> {
         }
     }
 
-    private void gestionarProyecto(Proyecto proyecto) {
+    /*private void gestionarProyecto(Proyecto proyecto) {
         UI.getCurrent().navigate("proyecto/" + proyecto.getId());
-    }
+    }*/
 }
