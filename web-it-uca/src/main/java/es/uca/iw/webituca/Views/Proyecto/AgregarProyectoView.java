@@ -41,8 +41,12 @@ public class AgregarProyectoView extends VerticalLayout {
     private final EmailService emailService;
 
     @Autowired
-    public AgregarProyectoView(EmailService emailService) {
+    public AgregarProyectoView(EmailService emailService, ProyectoService proyectoService, AuthenticatedUser authenticatedUser, CarteraService carteraService, UsuarioService usuarioService) {
         this.emailService = emailService;
+        this.proyectoService = proyectoService;
+        this.authenticatedUser = authenticatedUser;
+        this.carteraService = carteraService;
+        this.usuarioService = usuarioService;
 
         Cartera cartera = carteraService.getCarteraActual().orElse(null);
         if (cartera == null) {
@@ -102,6 +106,7 @@ public class AgregarProyectoView extends VerticalLayout {
             proyecto.setFechaInicio(fechaInicioField.getValue().atStartOfDay());
             proyecto.setFechaFin(fechaFinField.getValue().atStartOfDay());
             proyecto.setUsuario(authenticatedUser.get().get());
+            proyecto.setPresupuesto(Float.parseFloat(presupuestoValue));
             proyecto.setCartera(cartera);
             proyecto.setAvalador(avalador.getValue());
 
