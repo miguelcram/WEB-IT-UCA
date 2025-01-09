@@ -65,7 +65,7 @@ public class HomeView extends Composite<VerticalLayout> {
 
         switch (rol) {
             case ADMIN:
-                layout.add(crearBoton("Administrar Proyectos", "admin-proyectos"));
+                layout.add(crearBoton("Administrar Proyectos", "admin/ver-proyectos"));
                 layout.add(crearBoton("Administrar Usuarios", "admin-usuarios"));
                 break;
 

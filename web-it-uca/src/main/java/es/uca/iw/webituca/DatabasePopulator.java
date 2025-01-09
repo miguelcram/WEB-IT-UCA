@@ -43,6 +43,8 @@ public class DatabasePopulator implements CommandLineRunner {
             Usuario admin = new Usuario();
             admin.setUsuario("u11111111");
             admin.setNombre("admin");
+            admin.setApellido1("admin1");
+            admin.setApellido2("admin2");
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setEmail("admin@uca.es");
             admin.setActivo(true);  //Usuario admin ya verificado
@@ -50,10 +52,62 @@ public class DatabasePopulator implements CommandLineRunner {
             admin.setRol(es.uca.iw.webituca.Model.Rol.ADMIN);
             usuarioService.save(admin);
             System.out.println("Usuario Admin creado");
+
+            Usuario usuario1 = new Usuario();
+            usuario1.setUsuario("fer");
+            usuario1.setNombre("Fernando");
+            usuario1.setApellido1("Candon");
+            usuario1.setApellido2("Berenguer");
+            usuario1.setPassword(passwordEncoder.encode("fer"));
+            usuario1.setEmail("fernando.candonberenguer@alum.uca.es");
+            usuario1.setActivo(true);
+            usuario1.setCodigoRegistro(null);
+            usuario1.setRol(es.uca.iw.webituca.Model.Rol.USUARIO);
+            usuarioService.save(usuario1);
+            System.out.println("Usuario creado: " + usuario1.getNombre());
+
+            Usuario usuario2 = new Usuario();
+            usuario2.setUsuario("miguel");
+            usuario2.setNombre("Miguel");
+            usuario2.setApellido1("Cabral");
+            usuario2.setApellido2("Ramirez");
+            usuario2.setPassword(passwordEncoder.encode("miguel"));
+            usuario2.setEmail("miguel.cabralramirez@alum.uca.es");
+            usuario2.setActivo(true);
+            usuario2.setCodigoRegistro(null);
+            usuario2.setRol(es.uca.iw.webituca.Model.Rol.AVALADOR);
+            usuarioService.save(usuario2);
+            System.out.println("Usuario creado: " + usuario2.getNombre());
+
+            Usuario usuario3 = new Usuario();
+            usuario3.setUsuario("paco");
+            usuario3.setNombre("Paco");
+            usuario3.setApellido1("Gomez");
+            usuario3.setApellido2("Gutierrez");
+            usuario3.setPassword(passwordEncoder.encode("paco"));
+            usuario3.setEmail("paco@paco.es");
+            usuario3.setActivo(true);
+            usuario3.setCodigoRegistro(null);
+            usuario3.setRol(es.uca.iw.webituca.Model.Rol.CIO);
+            usuarioService.save(usuario3);
+            System.out.println("Usuario creado: " + usuario3.getNombre());
+
+            Usuario usuario4 = new Usuario();
+            usuario4.setUsuario("pepe");
+            usuario4.setNombre("Pepe");
+            usuario4.setApellido1("Gutierrez");
+            usuario4.setApellido2("Gomez");
+            usuario4.setPassword(passwordEncoder.encode("pepe"));
+            usuario4.setEmail("pepe@pepe.es");
+            usuario4.setActivo(true);
+            usuario4.setCodigoRegistro(null);
+            usuario4.setRol(es.uca.iw.webituca.Model.Rol.OTP);
+            usuarioService.save(usuario4);
+            System.out.println("Usuario creado: " + usuario4.getNombre());
         }
 
         // Crear 3 usuarios adicionales
-        if(usuarioService.count() == 1) {
+        /*if(usuarioService.count() == 1) {
             for (int i = 1; i <= 3; i++) {
                 Usuario usuario = new Usuario();
                 usuario.setUsuario(faker.idNumber().valid());
@@ -66,7 +120,7 @@ public class DatabasePopulator implements CommandLineRunner {
                 usuarioService.save(usuario);
                 System.out.println("Usuario creado: " + usuario.getNombre());
             }
-        }
+        }*/
 
         // Crear una única cartera
         if(carteraService.count() == 0) {

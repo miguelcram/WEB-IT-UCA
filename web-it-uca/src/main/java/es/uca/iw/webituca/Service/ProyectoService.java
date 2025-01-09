@@ -25,7 +25,7 @@ public class ProyectoService {
 
     public Proyecto guardarProyecto(Proyecto proyecto, MemoryBuffer memoryBuffer) {
         if(memoryBuffer != null && memoryBuffer.getInputStream() != null) {
-            String filePath = guardarFile(memoryBuffer, "src/main/resources/static/uploads", 
+            String filePath = guardarFile(memoryBuffer, "home/ubuntu/resources/static/uploads", 
                 proyecto.getUsuario().getNombre() + ".pdf");
             proyecto.setArchivoPath(filePath);
         } else {
