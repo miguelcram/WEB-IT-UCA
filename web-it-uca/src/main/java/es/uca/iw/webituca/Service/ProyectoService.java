@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import es.uca.iw.webituca.Model.Estado;
 import es.uca.iw.webituca.Model.Proyecto;
+import es.uca.iw.webituca.Model.Usuario;
 import es.uca.iw.webituca.Repository.ProyectoRepository;
 
 @Service
@@ -80,6 +81,10 @@ public class ProyectoService {
 
     public List<Proyecto> listarProyectos() {
         return proyectoRepository.findAll();
+    }
+
+    public List<Proyecto> listarProyectosPorUsuario(Usuario usuario) {
+        return proyectoRepository.findByUsuario(usuario);
     }
 
     public Optional<Proyecto> buscarProyectoPorId(Long idProyecto) {

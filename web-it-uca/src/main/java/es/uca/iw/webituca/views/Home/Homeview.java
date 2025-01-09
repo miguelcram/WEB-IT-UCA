@@ -1,6 +1,5 @@
 package es.uca.iw.webituca.Views.Home;
 
-
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -71,7 +70,7 @@ public class HomeView extends Composite<VerticalLayout> {
                 break;
 
             case USUARIO:
-                layout.add(crearBoton("Ver Proyectos", "ver-proyectos"));
+                layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
                 layout.add(crearBoton("Editar Perfil", "editar-perfil"));
                 break;
 
@@ -81,12 +80,12 @@ public class HomeView extends Composite<VerticalLayout> {
                 break;
 
             case AVALADOR:
-                layout.add(crearBoton("Ver Proyectos", "ver-proyectos"));
+                layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
                 layout.add(crearBoton("Ver Reportes", "ver-reportes"));
                 break;
 
             case OTP:
-                layout.add(crearBoton("Ver Proyectos", "ver-proyectos"));
+                layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
                 layout.add(crearBoton("Ver Reportes", "ver-reportes"));
                 break;
 
