@@ -1,9 +1,7 @@
 package es.uca.iw.webituca.Views.Proyecto;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
@@ -21,19 +19,18 @@ import es.uca.iw.webituca.Config.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Route(value = "proyecto/avalar")
 @RolesAllowed({"AVALADOR"})
-public class GestionarProyectoView extends Composite<VerticalLayout> {
+public class AvalarProyectoView extends Composite<VerticalLayout> {
     
     private final ProyectoService proyectoService;
     private final AuthenticatedUser authenticatedUser;
     private final EmailService emailService;
 
     @Autowired
-    public GestionarProyectoView(ProyectoService proyectoService, AuthenticatedUser authenticatedUser, EmailService emailService) {
+    public AvalarProyectoView(ProyectoService proyectoService, AuthenticatedUser authenticatedUser, EmailService emailService) {
         this.proyectoService = proyectoService;
         this.authenticatedUser = authenticatedUser;
         this.emailService = emailService;
@@ -85,6 +82,7 @@ public class GestionarProyectoView extends Composite<VerticalLayout> {
         grid.addColumn(Proyecto::getDescripcion).setHeader("Descripción");
         grid.addColumn(Proyecto::getFechaInicio).setHeader("Fecha Inicio");
         grid.addColumn(Proyecto::getFechaFin).setHeader("Fecha Fin");
+        grid.addColumn(Proyecto::getPresupuesto).setHeader("Presupuesto");
         grid.addColumn(proyecto -> {
             Usuario solicitante = proyecto.getUsuario();
             return solicitante.getId() + " - " + solicitante.getNombre();

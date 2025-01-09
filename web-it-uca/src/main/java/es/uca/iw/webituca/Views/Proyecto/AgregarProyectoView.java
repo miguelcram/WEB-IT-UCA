@@ -34,22 +34,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "proyecto/nuevo/")
 public class AgregarProyectoView extends VerticalLayout {
 
-    private final ProyectoService proyectoService;
-
-    private final AuthenticatedUser authenticatedUser;
-    
-    private final CarteraService carteraService;
-    
-    private final UsuarioService usuarioService;
-
+    private ProyectoService proyectoService;
+    private AuthenticatedUser authenticatedUser;
+    private CarteraService carteraService;
+    private UsuarioService usuarioService;
     private final EmailService emailService;
 
     @Autowired
-    public AgregarProyectoView(ProyectoService proyectoService, AuthenticatedUser authenticatedUser, CarteraService carteraService, UsuarioService usuarioService, EmailService emailService) {
-        this.proyectoService = proyectoService;
-        this.authenticatedUser = authenticatedUser;
-        this.carteraService = carteraService;
-        this.usuarioService = usuarioService;
+    public AgregarProyectoView(EmailService emailService) {
         this.emailService = emailService;
 
         Cartera cartera = carteraService.getCarteraActual().orElse(null);
@@ -65,6 +57,21 @@ public class AgregarProyectoView extends VerticalLayout {
         TextArea descripcionField = new TextArea("Descripción");
         DatePicker fechaInicioField = new DatePicker("Fecha de Inicio");
         DatePicker fechaFinField = new DatePicker("Fecha de Fin");
+
+        // Campo de Presupuesto con validación
+        TextField presupuestoField = new TextField("Presupuesto");
+        presupuestoField.setPlaceholder("Introduce un valor (ej: 123.45)");
+
+        presupuestoField.addValueChangeListener(event -> {
+            String value = event.getValue();
+            if (!isValidPresupuesto(value)) {
+                presupuestoField.setInvalid(true);
+                presupuestoField.setErrorMessage("Debe ser un número válido con un máximo de 2 decimales");
+            } else {
+                presupuestoField.setInvalid(false);
+            }
+        });
+
         ComboBox<Usuario> avalador = new ComboBox<>();
         avalador.setId("Avalador");
         avalador.setLabel("Avalador");
@@ -82,6 +89,12 @@ public class AgregarProyectoView extends VerticalLayout {
         upload.setDropLabel(new Span("Arrastra un archivo PDF aquí o haz clic para seleccionar"));
 
         Button saveButton = new Button("Guardar", event -> {
+            String presupuestoValue = presupuestoField.getValue();
+            if (!isValidPresupuesto(presupuestoValue)) {
+                Notification.show("Introduce un presupuesto válido antes de guardar");
+                return;
+            }
+            
             Proyecto proyecto = new Proyecto();
             proyecto.setTitulo(tituloField.getValue());
             proyecto.setDescripcion(descripcionField.getValue());
@@ -102,7 +115,7 @@ public class AgregarProyectoView extends VerticalLayout {
             UI.getCurrent().access(() -> UI.getCurrent().navigate("/home"));
         });
 
-        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, avalador, upload);
+        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, presupuestoField, avalador, upload);
         add(formLayout, saveButton);
     }
 
@@ -122,4 +135,12 @@ public class AgregarProyectoView extends VerticalLayout {
             emailService.enviarEmail(emailAvalador, subject, body);
         }
     }
+
+    private boolean isValidPresupuesto(String value) {
+        if (value == null || value.isEmpty()) {
+            return false;
+        }
+        return value.matches("\\d+(\\.\\d{1,2})?"); // Máximo 2 decimales
+    }
+    
 }

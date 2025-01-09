@@ -88,7 +88,7 @@ public class DatabasePopulator implements CommandLineRunner {
                 proyecto.setTitulo(faker.book().title());
                 proyecto.setDescripcion(faker.lorem().sentence(10));
                 proyecto.setEstado(faker.options().option(Estado.values()));
-                proyecto.setPermisoGestion(faker.bool().bool());
+                proyecto.setPresupuesto((float) faker.number().randomDouble(2, 1000, 10000));
                 proyecto.setFechaInicio(LocalDateTime.now().minusDays(faker.number().numberBetween(1, 30)));
                 proyecto.setFechaFin(LocalDateTime.now().plusDays(faker.number().numberBetween(1, 30)));
                 proyecto.setPuntuacion1((float) faker.number().randomDouble(1, 0, 10));

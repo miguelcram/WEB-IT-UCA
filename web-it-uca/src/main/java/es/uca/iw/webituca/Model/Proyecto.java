@@ -32,8 +32,8 @@ public class Proyecto {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    @Column(nullable = false)
-    private boolean permisoGestion;
+    @Column
+    private Float presupuesto;
 
     @Column
     private LocalDateTime fechaInicio;
@@ -98,12 +98,12 @@ public class Proyecto {
         this.estado = estado;
     }
 
-    public boolean isPermisoGestion() {
-        return permisoGestion;
+    public Float getPresupuesto() {
+        return presupuesto;
     }
 
-    public void setPermisoGestion(boolean permisoGestion) {
-        this.permisoGestion = permisoGestion;
+    public void setPresupuesto(float presupuesto) {
+        this.presupuesto = presupuesto;
     }
 
     public LocalDateTime getFechaInicio() {
