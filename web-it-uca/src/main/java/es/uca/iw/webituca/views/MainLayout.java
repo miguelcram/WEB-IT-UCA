@@ -19,7 +19,7 @@ public class MainLayout extends Composite<VerticalLayout> implements RouterLayou
 
 
     public MainLayout() {
-        Header header = new Header();
+        Header header = new Header(null);
         Footer footer = new Footer();
         footer.getElement().getStyle().set("order", "999");
 

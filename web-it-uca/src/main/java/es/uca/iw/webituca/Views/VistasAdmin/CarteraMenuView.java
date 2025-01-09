@@ -1,7 +1,6 @@
 package es.uca.iw.webituca.Views.VistasAdmin;
 
-
-import es.uca.iw.webituca.Views.Home.HomeAdminView;
+import es.uca.iw.webituca.Views.Home.HomeView;
 import jakarta.annotation.security.RolesAllowed;
 
 import com.vaadin.flow.component.Composite;
@@ -97,7 +96,7 @@ public class CarteraMenuView extends Composite<VerticalLayout> {
         HorizontalLayout volverLayout = new HorizontalLayout();
         Button volverButton = new Button("Volver");
         volverButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        volverButton.addClickListener(e -> UI.getCurrent().navigate(HomeAdminView.class));
+        volverButton.addClickListener(e -> UI.getCurrent().navigate(HomeView.class));
         volverLayout.add(volverButton);
         volverLayout.setWidthFull();
         volverLayout.setAlignItems(FlexComponent.Alignment.END);
