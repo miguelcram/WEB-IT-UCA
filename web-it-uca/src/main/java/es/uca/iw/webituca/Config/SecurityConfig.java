@@ -29,8 +29,8 @@ public class SecurityConfig extends VaadinWebSecurity {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(new AntPathRequestMatcher("/layout//*.png")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/layout//*.svg")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/layouts/*.png")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/layouts/*.svg")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/useractivation")).permitAll()
         );
 

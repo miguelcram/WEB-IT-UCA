@@ -41,11 +41,11 @@ public class DatabasePopulator implements CommandLineRunner {
         // Creamos admin si no hay usuarios
         if(usuarioService.count() == 0) {
             Usuario admin = new Usuario();
-            admin.setUsuario("u11111111");
+            admin.setUsuario("admin");
             admin.setNombre("admin");
             admin.setApellido1("admin1");
             admin.setApellido2("admin2");
-            admin.setPassword(passwordEncoder.encode("admin"));
+            admin.setPassword("admin");
             admin.setEmail("admin@uca.es");
             admin.setActivo(true);  //Usuario admin ya verificado
             admin.setCodigoRegistro(null);
@@ -58,7 +58,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario1.setNombre("Fernando");
             usuario1.setApellido1("Candon");
             usuario1.setApellido2("Berenguer");
-            usuario1.setPassword(passwordEncoder.encode("fer"));
+            usuario1.setPassword("fer");
             usuario1.setEmail("fernando.candonberenguer@alum.uca.es");
             usuario1.setActivo(true);
             usuario1.setCodigoRegistro(null);
@@ -71,7 +71,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario2.setNombre("Miguel");
             usuario2.setApellido1("Cabral");
             usuario2.setApellido2("Ramirez");
-            usuario2.setPassword(passwordEncoder.encode("miguel"));
+            usuario2.setPassword("miguel");
             usuario2.setEmail("miguel.cabralramirez@alum.uca.es");
             usuario2.setActivo(true);
             usuario2.setCodigoRegistro(null);
@@ -84,7 +84,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario3.setNombre("Paco");
             usuario3.setApellido1("Gomez");
             usuario3.setApellido2("Gutierrez");
-            usuario3.setPassword(passwordEncoder.encode("paco"));
+            usuario3.setPassword("paco");
             usuario3.setEmail("paco@paco.es");
             usuario3.setActivo(true);
             usuario3.setCodigoRegistro(null);
@@ -97,7 +97,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario4.setNombre("Pepe");
             usuario4.setApellido1("Gutierrez");
             usuario4.setApellido2("Gomez");
-            usuario4.setPassword(passwordEncoder.encode("pepe"));
+            usuario4.setPassword("pepe");
             usuario4.setEmail("pepe@pepe.es");
             usuario4.setActivo(true);
             usuario4.setCodigoRegistro(null);
