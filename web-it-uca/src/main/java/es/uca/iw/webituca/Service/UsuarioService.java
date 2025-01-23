@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,16 +53,6 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findByEmail(email);
     }
 
-
-    // public Usuario loadUserByUsername(String username) {
-    //     Optional<Usuario> usuario = usuarioRepository.findByUsuario(username);
-    //     if(usuario.isPresent()) {
-    //         return usuario.get();
-    //     }
-    //     return null;
-    // }
-
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -76,7 +67,7 @@ public class UsuarioService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.isEnabled(), // Aquí puedes agregar más lógica si es necesario
+                user.isEnabled(), 
                 true,
                 true,
                 true,
@@ -118,9 +109,14 @@ public class UsuarioService implements UserDetailsService {
     return usuarioRepository.save(usuario);
     }
 
+   
     public void deleteUsuario(Long id) {
-    usuarioRepository.deleteById(id);
+    try {
+        usuarioRepository.deleteById(id);
+    } catch (DataIntegrityViolationException e) {
+        throw new IllegalStateException("El usuario no puede ser eliminado porque tiene proyectos asociados.", e);
     }
+}
 
     public Usuario updateRol(Long usuarioId, Rol nuevoRol) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
