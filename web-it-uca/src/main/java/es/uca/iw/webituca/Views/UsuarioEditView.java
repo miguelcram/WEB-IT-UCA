@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @PageTitle("Editar Perfil")
 @Route("/editar-perfil")
-@RolesAllowed({"USUARIO", "OTP"})
+@RolesAllowed({"USUARIO", "OTP", "ADMIN", "CIO", "AVALADOR"})
 public class UsuarioEditView extends Composite<VerticalLayout> {
 
     private final UsuarioService usuarioService;

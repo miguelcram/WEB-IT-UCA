@@ -1,5 +1,6 @@
 package es.uca.iw.webituca.Views.VistasAdmin;
 
+import es.uca.iw.webituca.Config.AuthenticatedUser;
 import es.uca.iw.webituca.Model.Rol;
 import es.uca.iw.webituca.Model.Usuario;
 import com.vaadin.flow.component.Composite;
@@ -32,9 +33,11 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
 
     private final UsuarioService usuarioService;
     private final Grid<Usuario> grid = new Grid<>(Usuario.class);
+    private final AuthenticatedUser authenticatedUser;
 
     @Autowired
-    public UsuarioUpdateView(UsuarioService usuarioService) {
+    public UsuarioUpdateView(UsuarioService usuarioService, AuthenticatedUser authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
         this.usuarioService = usuarioService;
         crearTitulo("Gestión de Usuarios");
         configurarGrid();
@@ -62,13 +65,6 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
             return rolComboBox;
         }).setHeader("Rol");
 
-        // // Columna con el icono de editar
-        // grid.addComponentColumn(usuario -> {
-        //     Icon editIcon = VaadinIcon.EDIT.create();
-        //     editIcon.addClickListener(event -> mostrarDialogoEditar(usuario));
-        //     return editIcon;
-        // }).setHeader("Acciones");
-
 
         grid.addComponentColumn(usuario -> {
             Button editarBtn = new Button(VaadinIcon.EDIT.create());
@@ -93,14 +89,20 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
         contenido.add("¿Estás seguro de que deseas eliminar al usuario " + usuario.getNombre() + "?");
     
         Button confirmarBtn = new Button("Eliminar", event -> {
-            try {
-                usuarioService.deleteUsuario(usuario.getId());
-                grid.getDataProvider().refreshAll(); // Refrescar el grid
-                Notification.show("Usuario eliminado con éxito.");
-            } catch (IllegalStateException e) {
-                Notification.show(e.getMessage(), 5000, Notification.Position.MIDDLE); // Mostrar el mensaje de error
+        
+            Usuario usuarioActual = authenticatedUser.get().get();  
+            if (usuarioActual != null && usuarioActual.getId().equals(usuario.getId())) {
+                Notification.show("No puedes eliminar al usuario actualmente autenticado.", 5000, Notification.Position.MIDDLE);
+            } else {
+                try {
+                    usuarioService.deleteUsuario(usuario.getId());
+                    grid.getDataProvider().refreshAll(); // Refrescar el grid
+                    Notification.show("Usuario eliminado con éxito.");
+                } catch (IllegalStateException e) {
+                    Notification.show(e.getMessage(), 5000, Notification.Position.MIDDLE); // Mostrar el mensaje de error
+                }
+                dialog.close();
             }
-            dialog.close();
         });
     
         Button cancelarBtn = new Button("Cancelar", event -> dialog.close());

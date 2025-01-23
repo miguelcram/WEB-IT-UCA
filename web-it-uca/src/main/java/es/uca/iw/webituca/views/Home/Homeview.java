@@ -68,26 +68,35 @@ public class HomeView extends Composite<VerticalLayout> {
                 layout.add(crearBoton("Administrar Proyectos", "admin/ver-proyectos"));
                 layout.add(crearBoton("Administrar Usuarios", "admin-usuarios"));
                 layout.add(crearBoton("Administrar Cartera", "admin-cartera"));
+                layout.add(crearBoton("Editar Perfil", "editar-perfil"));
                 break;
 
             case USUARIO:
+                layout.add(crearBoton("Agregar Proyecto", "proyecto/nuevo"));
                 layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
                 layout.add(crearBoton("Editar Perfil", "editar-perfil"));
                 break;
 
             case CIO:
+                layout.add(crearBoton("Agregar Proyecto", "proyecto/nuevo"));
+                layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
                 layout.add(crearBoton("Puntuar Proyectos", "puntuar-proyectos"));
                 layout.add(crearBoton("Ver Reportes", "ver-reportes"));
+                layout.add(crearBoton("Editar Perfil", "editar-perfil"));
                 break;
 
             case AVALADOR:
+                layout.add(crearBoton("Agregar Proyecto", "proyecto/nuevo"));
                 layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
-                layout.add(crearBoton("Ver Reportes", "ver-reportes"));
+                layout.add(crearBoton("Editar Perfil", "editar-perfil"));
+                layout.add(crearBoton("Avalar Proyectos", "proyecto/avalar"));
                 break;
 
             case OTP:
+                layout.add(crearBoton("Agregar Proyecto", "proyecto/nuevo"));
                 layout.add(crearBoton("Ver Proyectos", "proyecto/ver-proyectos"));
                 layout.add(crearBoton("Ver Reportes", "ver-reportes"));
+                layout.add(crearBoton("Editar Perfil", "editar-perfil"));
                 break;
 
             default:
