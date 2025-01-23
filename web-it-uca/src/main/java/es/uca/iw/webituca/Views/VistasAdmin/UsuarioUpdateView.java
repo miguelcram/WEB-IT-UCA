@@ -62,13 +62,58 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
             return rolComboBox;
         }).setHeader("Rol");
 
-        // Columna con el icono de editar
+        // // Columna con el icono de editar
+        // grid.addComponentColumn(usuario -> {
+        //     Icon editIcon = VaadinIcon.EDIT.create();
+        //     editIcon.addClickListener(event -> mostrarDialogoEditar(usuario));
+        //     return editIcon;
+        // }).setHeader("Acciones");
+
+
         grid.addComponentColumn(usuario -> {
-            Icon editIcon = VaadinIcon.EDIT.create();
-            editIcon.addClickListener(event -> mostrarDialogoEditar(usuario));
-            return editIcon;
+            Button editarBtn = new Button(VaadinIcon.EDIT.create());
+            editarBtn.addClickListener(event -> mostrarDialogoEditar(usuario));
+            return editarBtn;
         }).setHeader("Acciones");
+
+        // Columna con el botón de eliminar
+        grid.addComponentColumn(usuario -> {
+            Button eliminarBtn = new Button("Eliminar", event -> mostrarDialogoEliminar(usuario));
+            eliminarBtn.addClassName("danger"); // Estilo para resaltar el botón como acción peligrosa
+            return eliminarBtn;
+        }).setHeader("Eliminar");
     }
+
+    // Mostrar diálogo de confirmación para eliminar el usuario
+    private void mostrarDialogoEliminar(Usuario usuario) {
+        Dialog dialog = new Dialog();
+        dialog.setWidth("400px");
+    
+        VerticalLayout contenido = new VerticalLayout();
+        contenido.add("¿Estás seguro de que deseas eliminar al usuario " + usuario.getNombre() + "?");
+    
+        Button confirmarBtn = new Button("Eliminar", event -> {
+            try {
+                usuarioService.deleteUsuario(usuario.getId());
+                grid.getDataProvider().refreshAll(); // Refrescar el grid
+                Notification.show("Usuario eliminado con éxito.");
+            } catch (IllegalStateException e) {
+                Notification.show(e.getMessage(), 5000, Notification.Position.MIDDLE); // Mostrar el mensaje de error
+            }
+            dialog.close();
+        });
+    
+        Button cancelarBtn = new Button("Cancelar", event -> dialog.close());
+        HorizontalLayout botones = new HorizontalLayout(confirmarBtn, cancelarBtn);
+        contenido.add(botones);
+    
+        dialog.add(contenido);
+        dialog.open();
+    }
+
+
+
+
 
     // Cargar usuarios desde el servicio
     private void cargarUsuarios() {
@@ -80,28 +125,27 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
     private void mostrarDialogoEditar(Usuario usuario) {
         Dialog dialog = new Dialog();
         dialog.setWidth("600px");
-
+    
         FormLayout formulario = new FormLayout();
-
+    
         // Crear los campos de formulario con los valores actuales del usuario
         TextField nombreField = new TextField("Nombre");
         nombreField.setValue(usuario.getNombre());
-
+    
         TextField apellido1Field = new TextField("Apellido1");
         apellido1Field.setValue(usuario.getApellido1());
-
+    
         TextField apellido2Field = new TextField("Apellido2");
         apellido2Field.setValue(usuario.getApellido2());
-
+    
         TextField emailField = new TextField("Email");
         emailField.setValue(usuario.getEmail());
-
+    
         TextField telefonoField = new TextField("Telefono");
         telefonoField.setValue(usuario.getTelefono());
-
-
+    
         formulario.add(nombreField, apellido1Field, apellido2Field, telefonoField, emailField);
-
+    
         // Botones de "Guardar" y "Cancelar"
         Button guardarBtn = new Button("Guardar", event -> {
             usuario.setNombre(nombreField.getValue());
@@ -109,20 +153,18 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
             usuario.setApellido2(apellido2Field.getValue());
             usuario.setEmail(emailField.getValue());
             usuario.setTelefono(telefonoField.getValue());
-
+    
             // Actualizar los datos del usuario en la base de datos
             usuarioService.saveOrUpdateUsuario(usuario);
-            grid.getDataProvider().refreshAll();  // Refrescar el grid para mostrar los cambios
+            grid.setItems(usuarioService.getAllUsuarios()); // Refrescar el grid
             dialog.close();
+            Notification.show("Usuario actualizado con éxito.");
         });
-
-        
-        Button cancelarBtn = new Button("Cancelar", event -> {
-            UI.getCurrent().navigate("home"); // Redirige a la vista "home"
-        });
+    
+        Button cancelarBtn = new Button("Cancelar", event -> dialog.close());
         HorizontalLayout botones = new HorizontalLayout(guardarBtn, cancelarBtn);
         botones.setJustifyContentMode(HorizontalLayout.JustifyContentMode.CENTER);
-
+    
         dialog.add(formulario, botones);
         dialog.open();
     }

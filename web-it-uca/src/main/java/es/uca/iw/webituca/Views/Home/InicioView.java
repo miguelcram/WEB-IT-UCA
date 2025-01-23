@@ -78,38 +78,5 @@ public class InicioView extends Composite<VerticalLayout> {
             layout.add(grid);
         }
 
-        // Botón para agregar proyectos
-        if (authenticatedUser.get().isPresent()) {
-            Button agregar = new Button("Agregar Proyecto");
-            agregar.addClickListener(e -> UI.getCurrent().navigate("proyecto/nuevo"));
-            agregar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-            layout.add(agregar);
-        }
-
-        // Botón para ver proyectos
-        if (authenticatedUser.get().isPresent()) {
-            Button verProyectos = new Button("Ver Mis Proyectos");
-            verProyectos.addClickListener(e -> UI.getCurrent().navigate("proyecto/ver-proyectos"));
-            layout.add(verProyectos);
-        }
-
-        // Botón para avalar proyectos para AVALADORES
-        if (authenticatedUser.get().isPresent() && 
-            authenticatedUser.get().get().getRol() == Rol.AVALADOR) {
-            Button avalarProyectosButton = new Button("Avalar Proyectos");
-            avalarProyectosButton.addClickListener(e -> UI.getCurrent().navigate("proyecto/avalar"));
-            layout.add(avalarProyectosButton);
-        }
-        
-        Button logoutButton = new Button("Cerrar sesión", event -> {
-            authenticatedUser.logout(); // Limpiar la sesión
-            UI.getCurrent().getPage().reload(); // Recargar la página para actualizar el estado del usuario
-        });
-        
-        if(authenticatedUser.get().isPresent()) {
-            layout.add(logoutButton);
-        } else {
-            logoutButton.setVisible(false);
-        }
     }
 }
