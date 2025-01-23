@@ -45,10 +45,11 @@ Las herramientas que se utilizarán durante el desarrollo del proyecto son:
 
     Gestión de Repositorio: GitHub
     Gestión de Tareas: GitHub Projects
-    Comunicación: Discord
+    Comunicación: Discord, WhatsApp
     Control de Versiones: Git
     CI/CD: GitHub Actions
-    Entorno de Desarrollo: IntelliJ IDEA, Visual Studio Code    
+    Modelado y Prototipado: MIRO para el modelado y BALSAMIC para los bozetos/mocaps
+    Entorno de Desarrollo: Visual Studio Code    
     Framework: Spring Framework 6 para el backend, Vaadin24 para el frontend
     Pruebas: JUnit
 
