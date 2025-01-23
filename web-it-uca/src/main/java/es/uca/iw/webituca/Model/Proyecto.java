@@ -48,6 +48,12 @@ public class Proyecto {
     private Float puntuacion2; // puntuacion del avalador
 
     @Column
+    private String interesados;
+
+    @Column
+    private String alcance;
+
+    @Column
     private Integer prioridad;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -136,6 +142,22 @@ public class Proyecto {
 
     public void setPuntuacion2(Float puntuacion2) {
         this.puntuacion2 = puntuacion2;
+    }
+
+    public String getInteresados() {
+        return interesados;
+    }
+
+    public void setInteresados(String interesados) {
+        this.interesados = interesados;
+    }
+
+    public String getAlcance() {
+        return alcance;
+    }
+
+    public void setAlcance(String alcance) {
+        this.alcance = alcance;
     }
 
     public Integer getPrioridad() {

@@ -21,6 +21,7 @@ import es.uca.iw.webituca.Config.AuthenticatedUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,8 +68,11 @@ public class AvalarProyectoView extends Composite<VerticalLayout> {
         grid.setItems(proyectosPorAvalar);
         grid.addColumn(Proyecto::getTitulo).setHeader("Título").setAutoWidth(true);
         grid.addColumn(Proyecto::getDescripcion).setHeader("Descripción").setAutoWidth(true);
-        grid.addColumn(Proyecto::getFechaInicio).setHeader("Fecha Inicio").setAutoWidth(true);
-        grid.addColumn(Proyecto::getFechaFin).setHeader("Fecha Fin").setAutoWidth(true);
+        DateTimeFormatter formatoTabla = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        grid.addColumn(proyecto -> proyecto.getFechaInicio().format(formatoTabla)).setHeader("Fecha Inicio").setAutoWidth(true);
+        grid.addColumn(proyecto -> proyecto.getFechaFin().format(formatoTabla)).setHeader("Fecha Fin").setAutoWidth(true);
+        grid.addColumn(Proyecto::getInteresados).setHeader("Interesados").setAutoWidth(true);
+        grid.addColumn(Proyecto::getAlcance).setHeader("Alcance").setAutoWidth(true);
         grid.addColumn(Proyecto::getPresupuesto).setHeader("Presupuesto").setAutoWidth(true);
         grid.addColumn(Proyecto::getPrioridad).setHeader("Prioridad").setAutoWidth(true);
         grid.addColumn(proyecto -> {
@@ -95,16 +99,11 @@ public class AvalarProyectoView extends Composite<VerticalLayout> {
             
             //Boton de aceptar
             Button aceptarButton = new Button("Aceptar", event -> {
-                if (prioridadField.getValue() == null) {
-                    Notification.show("Debe seleccionar una prioridad antes de aceptar el proyecto.");
-                    return;
-                }
-                
                 proyecto.setPrioridad(prioridadField.getValue());
-                proyectoService.cambiarEstadoProyecto(proyecto.getId(), Estado.EN_TRAMITE_AVALADO);
+                proyecto.setEstado(Estado.EN_TRAMITE_AVALADO);
                 proyectoService.guardarProyecto(proyecto, null);
                 enviarNotificacionEmail(proyecto, true);
-                Notification.show("El proyecto ha sido avalado con prioridad " + prioridadField.getValue() + ".");
+                Notification.show("El proyecto ha sido avalado con prioridad " + proyecto.getPrioridad() + ".");
                 getUI().ifPresent(ui -> ui.navigate("home"));
             });
             aceptarButton.setWidth("90px");

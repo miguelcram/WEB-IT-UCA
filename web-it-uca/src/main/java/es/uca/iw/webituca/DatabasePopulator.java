@@ -47,6 +47,7 @@ public class DatabasePopulator implements CommandLineRunner {
             admin.setApellido2("admin2");
             admin.setPassword("admin");
             admin.setEmail("admin@uca.es");
+            admin.setTelefono("111111111");
             admin.setActivo(true);  //Usuario admin ya verificado
             admin.setCodigoRegistro(null);
             admin.setRol(es.uca.iw.webituca.Model.Rol.ADMIN);
@@ -60,6 +61,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario1.setApellido2("Berenguer");
             usuario1.setPassword("fer");
             usuario1.setEmail("fernando.candonberenguer@alum.uca.es");
+            usuario1.setTelefono("222222222");
             usuario1.setActivo(true);
             usuario1.setCodigoRegistro(null);
             usuario1.setRol(es.uca.iw.webituca.Model.Rol.USUARIO);
@@ -73,6 +75,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario2.setApellido2("Ramirez");
             usuario2.setPassword("miguel");
             usuario2.setEmail("miguel.cabralramirez@alum.uca.es");
+            usuario2.setTelefono("333333333");
             usuario2.setActivo(true);
             usuario2.setCodigoRegistro(null);
             usuario2.setRol(es.uca.iw.webituca.Model.Rol.AVALADOR);
@@ -86,6 +89,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario3.setApellido2("Gutierrez");
             usuario3.setPassword("paco");
             usuario3.setEmail("paco@paco.es");
+            usuario3.setTelefono("444444444");
             usuario3.setActivo(true);
             usuario3.setCodigoRegistro(null);
             usuario3.setRol(es.uca.iw.webituca.Model.Rol.CIO);
@@ -99,6 +103,7 @@ public class DatabasePopulator implements CommandLineRunner {
             usuario4.setApellido2("Gomez");
             usuario4.setPassword("pepe");
             usuario4.setEmail("pepe@pepe.es");
+            usuario4.setTelefono("555555555");
             usuario4.setActivo(true);
             usuario4.setCodigoRegistro(null);
             usuario4.setRol(es.uca.iw.webituca.Model.Rol.OTP);
@@ -125,12 +130,12 @@ public class DatabasePopulator implements CommandLineRunner {
         // Crear una única cartera
         if(carteraService.count() == 0) {
             Cartera cartera = new Cartera();
-            cartera.setNombre(faker.company().name());
-            cartera.setDescripcion(faker.lorem().sentence(20));
+            cartera.setNombre("Cartera TI 2025");
+            cartera.setDescripcion("Esta es la cartera actual de los proyectos de TI para el año 2025");
             cartera.setFechaCreacion(LocalDateTime.now().minusDays(faker.number().numberBetween(10, 100)));
             cartera.setFechaFin(LocalDateTime.now().plusDays(faker.number().numberBetween(10, 100)));
-            cartera.setNumero_horas((float) faker.number().randomDouble(2, 100, 1000));
-            cartera.setPresupuesto((float) faker.number().randomDouble(2, 1000, 100000));
+            cartera.setNumero_horas(30000);
+            cartera.setPresupuesto(4000000);
             carteraService.createCartera(cartera);
             System.out.println("Cartera creada: " + cartera.getNombre());
         }
@@ -147,6 +152,8 @@ public class DatabasePopulator implements CommandLineRunner {
                 proyecto.setFechaFin(LocalDateTime.now().plusDays(faker.number().numberBetween(1, 30)));
                 proyecto.setPuntuacion1((float) faker.number().randomDouble(1, 0, 10));
                 proyecto.setPuntuacion2((float) faker.number().randomDouble(1, 0, 10));
+                proyecto.setInteresados(faker.lorem().sentence(10));
+                proyecto.setAlcance(faker.lorem().sentence(10));
                 proyecto.setPrioridad(faker.number().numberBetween(1, 5));
                 Long idCarteraLong = (long) 1;
                 proyecto.setCartera(carteraService.getCarteraById(idCarteraLong));

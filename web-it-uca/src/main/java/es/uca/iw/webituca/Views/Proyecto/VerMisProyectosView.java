@@ -3,6 +3,7 @@ package es.uca.iw.webituca.Views.Proyecto;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -16,6 +17,8 @@ import es.uca.iw.webituca.Model.Usuario;
 
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RolesAllowed({"AVALADOR", "OTP", "ADMIN", "USUARIO"})
@@ -36,9 +39,7 @@ public class VerMisProyectosView extends VerticalLayout {
         }
 
         Usuario usuario = authenticatedUser.get().get();
-
         List<Proyecto> proyectos = proyectoService.listarProyectosPorUsuario(usuario);
-
         if(proyectos.isEmpty()) {
             Notification.show("No tienes proyectos registrados.");
             return;
@@ -46,21 +47,26 @@ public class VerMisProyectosView extends VerticalLayout {
 
         Grid<Proyecto> grid = new Grid<>(Proyecto.class, false);
         grid.setItems(proyectos);
-        grid.addColumn(Proyecto::getTitulo).setHeader("Título");
-        grid.addColumn(Proyecto::getDescripcion).setHeader("Descripción");
-        grid.addColumn(Proyecto::getFechaInicio).setHeader("Fecha Inicio");
-        grid.addColumn(Proyecto::getFechaFin).setHeader("Fecha Fin");
-        grid.addColumn(Proyecto::getEstado).setHeader("Estado");
-        grid.addColumn(Proyecto::getPresupuesto).setHeader("Presupuesto");
+        grid.addColumn(Proyecto::getTitulo).setHeader("Título").setAutoWidth(true);
+        grid.addColumn(Proyecto::getDescripcion).setHeader("Descripción").setAutoWidth(true);
+        DateTimeFormatter formatoTabla = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        grid.addColumn(proyecto -> proyecto.getFechaInicio().format(formatoTabla)).setHeader("Fecha Inicio").setAutoWidth(true);
+        grid.addColumn(proyecto -> proyecto.getFechaFin().format(formatoTabla)).setHeader("Fecha Fin").setAutoWidth(true);
+        grid.addColumn(Proyecto::getInteresados).setHeader("Interesados").setAutoWidth(true);
+        grid.addColumn(Proyecto::getAlcance).setHeader("Alcance").setAutoWidth(true);
+        grid.addColumn(Proyecto::getEstado).setHeader("Estado").setAutoWidth(true);
+        grid.addColumn(Proyecto::getPrioridad).setHeader("Prioridad").setAutoWidth(true);
+        grid.addColumn(Proyecto::getPresupuesto).setHeader("Presupuesto").setAutoWidth(true);
 
         // Columna de botones para editar/ver proyectos
         grid.addComponentColumn(proyecto -> {
-            Button editarVerButton = new Button("Editar/Ver", click -> {
+            Button editarVerButton = new Button("Editar", click -> {
                 editarProyecto(proyecto);
             });
             editarVerButton.setEnabled(proyecto.getEstado() != Estado.RECHAZADO && proyecto.getEstado() != Estado.TERMINADO);
+            editarVerButton.setWidth("80px");
             return editarVerButton;
-        }).setHeader("Acción");
+        }).setHeader("Acción").setAutoWidth(true);
 
         add(grid);
     }
@@ -76,13 +82,27 @@ public class VerMisProyectosView extends VerticalLayout {
         descripcionField.setValue(proyecto.getDescripcion());
         descripcionField.setReadOnly(proyecto.getEstado() == Estado.RECHAZADO || proyecto.getEstado() == Estado.TERMINADO);
 
+        TextArea interesadosField = new TextArea("Interesados");
+        interesadosField.setValue(proyecto.getInteresados());
+        interesadosField.setReadOnly(proyecto.getEstado() == Estado.RECHAZADO || proyecto.getEstado() == Estado.TERMINADO);
+
+        TextArea alcanceField = new TextArea("Alcance");
+        alcanceField.setValue(proyecto.getAlcance());
+        alcanceField.setReadOnly(proyecto.getEstado() == Estado.RECHAZADO || proyecto.getEstado() == Estado.TERMINADO);
+
         TextField presupuestoField = new TextField("Presupuesto");
         presupuestoField.setValue(String.valueOf(proyecto.getPresupuesto()));
         presupuestoField.setReadOnly(proyecto.getEstado() == Estado.RECHAZADO || proyecto.getEstado() == Estado.TERMINADO);
 
+        HorizontalLayout row1 = new HorizontalLayout(tituloField, descripcionField);
+        HorizontalLayout row2 = new HorizontalLayout(interesadosField, alcanceField);
+        HorizontalLayout row3 = new HorizontalLayout(presupuestoField);
+
         Button guardarButton = new Button("Guardar cambios", event -> {
             proyecto.setTitulo(tituloField.getValue());
             proyecto.setDescripcion(descripcionField.getValue());
+            proyecto.setInteresados(interesadosField.getValue());
+            proyecto.setAlcance(alcanceField.getValue());
             try {
                 proyecto.setPresupuesto(Float.parseFloat(presupuestoField.getValue()));
             } catch (NumberFormatException e) {
@@ -100,7 +120,7 @@ public class VerMisProyectosView extends VerticalLayout {
             getUI().ifPresent(ui -> ui.navigate("home"));
         });
 
-        add(tituloField, descripcionField, presupuestoField, guardarButton, volverButton);;
+        add(row1, row2, row3, guardarButton, volverButton);
     }
     
 }

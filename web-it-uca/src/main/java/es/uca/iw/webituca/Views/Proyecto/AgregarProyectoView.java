@@ -1,5 +1,6 @@
 package es.uca.iw.webituca.Views.Proyecto;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -61,6 +62,8 @@ public class AgregarProyectoView extends VerticalLayout {
         TextArea descripcionField = new TextArea("Descripción");
         DatePicker fechaInicioField = new DatePicker("Fecha de Inicio");
         DatePicker fechaFinField = new DatePicker("Fecha de Fin");
+        TextArea interesadosField = new TextArea("Interesados");
+        TextArea alcanceField = new TextArea("Alcance");
 
         //Presupuesto con validación
         TextField presupuestoField = new TextField("Presupuesto");
@@ -115,6 +118,8 @@ public class AgregarProyectoView extends VerticalLayout {
             proyecto.setEstado(Estado.EN_TRAMITE);
             proyecto.setFechaInicio(fechaInicioField.getValue().atStartOfDay());
             proyecto.setFechaFin(fechaFinField.getValue().atStartOfDay());
+            proyecto.setInteresados(interesadosField.getValue());
+            proyecto.setAlcance(alcanceField.getValue());
             proyecto.setUsuario(authenticatedUser.get().get());
             proyecto.setPresupuesto(Float.parseFloat(presupuestoField.getValue()));
             proyecto.setPrioridad(prioridadField.getValue());
@@ -132,7 +137,7 @@ public class AgregarProyectoView extends VerticalLayout {
             UI.getCurrent().access(() -> UI.getCurrent().navigate("/home"));
         });
 
-        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, presupuestoField, prioridadField, avalador, upload);
+        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, interesadosField, alcanceField, presupuestoField, prioridadField, avalador, upload);
         add(formLayout, saveButton);
     }
 

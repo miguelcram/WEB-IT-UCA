@@ -129,6 +129,7 @@ public class CarteraMenuView extends Composite<VerticalLayout> {
             carteraService.updateCartera(cartera.getId(), cartera);
             actualizarTabla();
             editDialog.close();
+            //getUI().ifPresent(ui -> ui.getPage().reload());
         });
 
         Button cancelButton = new Button("Cancelar", e -> editDialog.close());

@@ -96,8 +96,8 @@ public class UsuarioUpdateView extends Composite<VerticalLayout> {
             } else {
                 try {
                     usuarioService.deleteUsuario(usuario.getId());
-                    grid.getDataProvider().refreshAll(); // Refrescar el grid
-                    Notification.show("Usuario eliminado con éxito.");
+                    Notification.show("Usuario eliminado con éxito.", 3000, Notification.Position.MIDDLE);
+                    UI.getCurrent().getPage().executeJs("setTimeout(() => location.reload(), 5000);");
                 } catch (IllegalStateException e) {
                     Notification.show(e.getMessage(), 5000, Notification.Position.MIDDLE); // Mostrar el mensaje de error
                 }
