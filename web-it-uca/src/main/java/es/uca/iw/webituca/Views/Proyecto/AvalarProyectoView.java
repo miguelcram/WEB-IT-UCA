@@ -2,9 +2,12 @@ package es.uca.iw.webituca.Views.Proyecto;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -36,9 +39,8 @@ public class AvalarProyectoView extends Composite<VerticalLayout> {
         this.emailService = emailService;
 
         VerticalLayout layout = getContent();
-        layout.setSpacing(true);
-        layout.setPadding(true);
-        layout.setSizeFull();
+        layout.setSpacing(false);
+        layout.setPadding(false);
 
         if (authenticatedUser.get().isEmpty()) {
             layout.add(new Span("Debe iniciar sesión para acceder a esta vista."));
@@ -47,21 +49,6 @@ public class AvalarProyectoView extends Composite<VerticalLayout> {
 
         // Obtener el usuario autenticado
         Usuario usuario = authenticatedUser.get().get();
-        List<Proyecto> proyectos = proyectoService.listarProyectos();
-
-        List<Long> avaladoresIds = proyectos.stream()
-            .map(proyecto -> {
-                Usuario avalador = proyecto.getAvalador();
-                if (avalador != null) {
-                    return avalador.getId();
-                } else {
-                    // Manejar el caso en el que avalador es null
-                    return null;
-                }
-            })
-            .filter(id -> id != null) // Filtrar los valores null
-            .collect(Collectors.toList());
-
 
         // Filtramos proyectos por avalador y estado "EN_TRAMITE"
         List<Proyecto> proyectosPorAvalar = proyectoService.listarProyectos().stream().filter(proyecto -> {
@@ -78,36 +65,62 @@ public class AvalarProyectoView extends Composite<VerticalLayout> {
         // Crear una Grid para mostrar los proyectos
         Grid<Proyecto> grid = new Grid<>(Proyecto.class, false);
         grid.setItems(proyectosPorAvalar);
-        grid.addColumn(Proyecto::getTitulo).setHeader("Título");
-        grid.addColumn(Proyecto::getDescripcion).setHeader("Descripción");
-        grid.addColumn(Proyecto::getFechaInicio).setHeader("Fecha Inicio");
-        grid.addColumn(Proyecto::getFechaFin).setHeader("Fecha Fin");
-        grid.addColumn(Proyecto::getPresupuesto).setHeader("Presupuesto");
+        grid.addColumn(Proyecto::getTitulo).setHeader("Título").setAutoWidth(true);
+        grid.addColumn(Proyecto::getDescripcion).setHeader("Descripción").setAutoWidth(true);
+        grid.addColumn(Proyecto::getFechaInicio).setHeader("Fecha Inicio").setAutoWidth(true);
+        grid.addColumn(Proyecto::getFechaFin).setHeader("Fecha Fin").setAutoWidth(true);
+        grid.addColumn(Proyecto::getPresupuesto).setHeader("Presupuesto").setAutoWidth(true);
+        grid.addColumn(Proyecto::getPrioridad).setHeader("Prioridad").setAutoWidth(true);
         grid.addColumn(proyecto -> {
             Usuario solicitante = proyecto.getUsuario();
             return solicitante.getId() + " - " + solicitante.getNombre();
-        }).setHeader("Solicitante");
+        }).setHeader("Solicitante").setAutoWidth(true);
 
         // Columna con botón de gestionar
         grid.addComponentColumn(proyecto -> {
+            HorizontalLayout buttonsLayout = new HorizontalLayout();
+            buttonsLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+            buttonsLayout.setSpacing(true);
+            buttonsLayout.setPadding(true);
+
+            // Campo para prioridad
+            ComboBox<Integer> prioridadField = new ComboBox<>("Prioridad");
+            prioridadField.setItems(1, 2, 3, 4, 5); // Prioridad de 1 (baja) a 5 (alta)
+            prioridadField.setValue(proyecto.getPrioridad());
+            prioridadField.setWidth("80px");
+
+            prioridadField.addValueChangeListener(event -> {
+                proyecto.setPrioridad(event.getValue());
+            });
+            
+            //Boton de aceptar
             Button aceptarButton = new Button("Aceptar", event -> {
+                if (prioridadField.getValue() == null) {
+                    Notification.show("Debe seleccionar una prioridad antes de aceptar el proyecto.");
+                    return;
+                }
+                
+                proyecto.setPrioridad(prioridadField.getValue());
                 proyectoService.cambiarEstadoProyecto(proyecto.getId(), Estado.EN_TRAMITE_AVALADO);
+                proyectoService.guardarProyecto(proyecto, null);
                 enviarNotificacionEmail(proyecto, true);
-                Notification.show("El proyecto ha sido avalado.");
+                Notification.show("El proyecto ha sido avalado con prioridad " + prioridadField.getValue() + ".");
                 getUI().ifPresent(ui -> ui.navigate("home"));
             });
-            return aceptarButton;
-        }).setHeader("Aceptar");
-        
-        grid.addComponentColumn(proyecto -> {
+            aceptarButton.setWidth("90px");
+
+            //Boton de cancelar
             Button cancelarButton = new Button("Cancelar", event -> {
                 proyectoService.cambiarEstadoProyecto(proyecto.getId(), Estado.RECHAZADO);
                 enviarNotificacionEmail(proyecto, false);
                 Notification.show("El proyecto ha sido rechazado.");
                 getUI().ifPresent(ui -> ui.navigate("home"));
             });
-            return cancelarButton;
-        }).setHeader("Cancelar");
+            cancelarButton.setWidth("90px");
+            
+            buttonsLayout.add(prioridadField, aceptarButton, cancelarButton);
+            return buttonsLayout;
+        }).setHeader("Gestionar").setAutoWidth(true);
 
         layout.add(grid);
     }

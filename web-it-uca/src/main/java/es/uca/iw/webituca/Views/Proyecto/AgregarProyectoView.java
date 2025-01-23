@@ -62,10 +62,9 @@ public class AgregarProyectoView extends VerticalLayout {
         DatePicker fechaInicioField = new DatePicker("Fecha de Inicio");
         DatePicker fechaFinField = new DatePicker("Fecha de Fin");
 
-        // Campo de Presupuesto con validación
+        //Presupuesto con validación
         TextField presupuestoField = new TextField("Presupuesto");
         presupuestoField.setPlaceholder("Introduce un valor (ej: 123.45)");
-
         presupuestoField.addValueChangeListener(event -> {
             String value = event.getValue();
             if (!isValidPresupuesto(value)) {
@@ -75,6 +74,11 @@ public class AgregarProyectoView extends VerticalLayout {
                 presupuestoField.setInvalid(false);
             }
         });
+
+        // Prioridad
+        ComboBox<Integer> prioridadField = new ComboBox<>("Prioridad");
+        prioridadField.setItems(1, 2, 3, 4, 5); // 1 (baja) - 5 (alta)
+        prioridadField.setPlaceholder("Solicita la prioridad del proyecto");
 
         ComboBox<Usuario> avalador = new ComboBox<>();
         avalador.setId("Avalador");
@@ -98,6 +102,12 @@ public class AgregarProyectoView extends VerticalLayout {
                 Notification.show("Introduce un presupuesto válido antes de guardar");
                 return;
             }
+
+            if (fechaInicioField.getValue() == null || fechaFinField.getValue() == null ||
+                fechaInicioField.getValue().isAfter(fechaFinField.getValue())) {
+                Notification.show("Las fechas no son válidas.");
+                return;
+            }
             
             Proyecto proyecto = new Proyecto();
             proyecto.setTitulo(tituloField.getValue());
@@ -106,7 +116,9 @@ public class AgregarProyectoView extends VerticalLayout {
             proyecto.setFechaInicio(fechaInicioField.getValue().atStartOfDay());
             proyecto.setFechaFin(fechaFinField.getValue().atStartOfDay());
             proyecto.setUsuario(authenticatedUser.get().get());
-            proyecto.setPresupuesto(Float.parseFloat(presupuestoValue));
+            proyecto.setPresupuesto(Float.parseFloat(presupuestoField.getValue()));
+            proyecto.setPrioridad(prioridadField.getValue());
+            proyecto.setArchivoPath(buffer.getFileName());
             proyecto.setCartera(cartera);
             proyecto.setAvalador(avalador.getValue());
 
@@ -120,7 +132,7 @@ public class AgregarProyectoView extends VerticalLayout {
             UI.getCurrent().access(() -> UI.getCurrent().navigate("/home"));
         });
 
-        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, presupuestoField, avalador, upload);
+        formLayout.add(tituloField, descripcionField, fechaInicioField, fechaFinField, presupuestoField, prioridadField, avalador, upload);
         add(formLayout, saveButton);
     }
 
