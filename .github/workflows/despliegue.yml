@@ -3,10 +3,10 @@ name: despliegue
 on:
   push:
     branches:
-      - despliegue # Ejecutar en cada push a la rama 'despliegue'
+      - Desplegado # Ejecutar en cada push a la rama 'despliegue'
   pull_request:
     branches:
-      - despliegue # Ejecutar en cada pull request hacia la rama 'despliegue'
+      - Desplegado # Ejecutar en cada pull request hacia la rama 'despliegue'
 
 jobs:
   build-and-deploy:
