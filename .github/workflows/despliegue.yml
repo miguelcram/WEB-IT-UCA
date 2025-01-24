@@ -1,0 +1,44 @@
+name: despliegue
+
+on:
+  push:
+    branches:
+      - despliegue # Ejecutar en cada push a la rama 'despliegue'
+  pull_request:
+    branches:
+      - despliegue # Ejecutar en cada pull request hacia la rama 'despliegue'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:      
+      # Paso 1: Checkout del código fuente
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Paso 2: Configurar Java y Maven
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17' # Cambia según tu versión de Java
+          distribution: 'temurin'
+
+      # Paso 3: Construir la aplicación con Maven
+      - name: Build with Maven
+        run: mvn clean package -Dmaven.test.skip=true
+        working-directory: ./web-it-uca
+      
+      # Paso 4: Renombrar el archivo jar
+      - name: Rename jar file
+      
+      # Paso 5: Desplegar la aplicación en GitHub
+      - name: Deploy to GitHub packages
+        run: mvn deploy -Dmaven.test.skip=true
+        working-directory: ./web-it-uca/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
