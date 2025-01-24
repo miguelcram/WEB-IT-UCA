@@ -30,7 +30,7 @@ jobs:
 
       # Paso 3: Construir la aplicación con Maven
       - name: Build with Maven
-        run: mvn clean package -Dmaven.test.skip=true
+        run: mvn clean package
         working-directory: ./web-it-uca
       
       # Paso 4: Desplegar la aplicación en GitHub
